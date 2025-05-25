@@ -1,0 +1,8 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景圆圈 -->
+  <circle cx="40" cy="40" r="40" fill="#E5E7EB"/>
+  <!-- 用户头部 -->
+  <circle cx="40" cy="30" r="12" fill="#9CA3AF"/>
+  <!-- 用户身体 -->
+  <path d="M20 65C20 55 28 50 40 50C52 50 60 55 60 65V70C60 72 58 74 56 74H24C22 74 20 72 20 70V65Z" fill="#9CA3AF"/>
+</svg> 

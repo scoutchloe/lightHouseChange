@@ -1,0 +1,25 @@
+<svg width="375" height="180" viewBox="0 0 375 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景渐变 -->
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#059669;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0D9488;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="375" height="180" fill="url(#bg3)"/>
+  
+  <!-- 装饰图形 -->
+  <circle cx="40" cy="40" r="20" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="320" cy="30" r="25" fill="rgba(255,255,255,0.1)"/>
+  <rect x="300" y="130" width="35" height="35" rx="8" fill="rgba(255,255,255,0.1)"/>
+  
+  <!-- 主要内容 -->
+  <text x="30" y="80" fill="white" font-size="24" font-weight="bold" font-family="Arial">环保材料</text>
+  <text x="30" y="105" fill="white" font-size="24" font-weight="bold" font-family="Arial">健康家居</text>
+  <text x="30" y="130" fill="rgba(255,255,255,0.9)" font-size="14" font-family="Arial">绿色环保，安心居住</text>
+  
+  <!-- 装饰叶子图标 -->
+  <path d="M280 70C280 70 290 60 300 70C310 80 300 90 290 85C285 82 280 75 280 70Z" fill="rgba(255,255,255,0.2)"/>
+  <path d="M285 75C285 75 290 70 295 75C300 80 295 85 290 82C287 80 285 77 285 75Z" fill="rgba(255,255,255,0.3)"/>
+  <line x1="290" y1="85" x2="295" y2="95" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+</svg> 

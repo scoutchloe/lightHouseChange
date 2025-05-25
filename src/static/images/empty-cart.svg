@@ -1,0 +1,12 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 购物车主体 -->
+  <path d="M20 20H30L35 40H95L90 60H40L35 40H20V20Z" fill="#E5E7EB" stroke="#D1D5DB" stroke-width="2"/>
+  <!-- 购物车轮子 -->
+  <circle cx="45" cy="75" r="5" fill="#D1D5DB"/>
+  <circle cx="80" cy="75" r="5" fill="#D1D5DB"/>
+  <!-- 空状态装饰 -->
+  <path d="M50 35L55 45L65 40L60 50H50V35Z" fill="#F3F4F6"/>
+  <circle cx="70" cy="45" r="3" fill="#F3F4F6"/>
+  <!-- 背景装饰圆圈 -->
+  <circle cx="60" cy="60" r="45" fill="none" stroke="#F3F4F6" stroke-width="1" stroke-dasharray="5,5" opacity="0.5"/>
+</svg> 

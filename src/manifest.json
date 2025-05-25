@@ -1,0 +1,29 @@
+{
+  "name": "入舍",
+  "appid": "",
+  "description": "家居轻改造微信小程序",
+  "versionName": "1.0.0",
+  "versionCode": "100",
+  "transformPx": false,
+  "mp-weixin": {
+    "appid": "",
+    "setting": {
+      "urlCheck": false,
+      "es6": true,
+      "postcss": true,
+      "minified": true
+    },
+    "usingComponents": true,
+    "permission": {
+      "scope.userLocation": {
+        "desc": "你的位置信息将用于为你推荐附近的家居改造方案"
+      },
+      "scope.camera": {
+        "desc": "拍摄功能需要使用您的相机权限"
+      }
+    }
+  },
+  "uniStatistics": {
+    "enable": false
+  }
+} 

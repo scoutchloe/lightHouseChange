@@ -1,0 +1,148 @@
+{
+  "pages": [
+    {
+      "path": "pages/home/index",
+      "style": {
+        "navigationBarTitleText": "入舍",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/space-selection/index",
+      "style": {
+        "navigationBarTitleText": "选择空间",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/problem-diagnosis/index",
+      "style": {
+        "navigationBarTitleText": "问题诊断",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/solution-list/index",
+      "style": {
+        "navigationBarTitleText": "解决方案",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/solution-detail/index",
+      "style": {
+        "navigationBarTitleText": "方案详情",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/photo-diagnosis/index",
+      "style": {
+        "navigationBarTitleText": "拍照诊断",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/diy-design/index",
+      "style": {
+        "navigationBarTitleText": "DIY设计",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/cart/index",
+      "style": {
+        "navigationBarTitleText": "购物车",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/profile/index",
+      "style": {
+        "navigationBarTitleText": "个人中心",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/login/index",
+      "style": {
+        "navigationBarTitleText": "登录",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/favorites/index",
+      "style": {
+        "navigationBarTitleText": "我的收藏",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/history/index",
+      "style": {
+        "navigationBarTitleText": "浏览历史",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/settings/index",
+      "style": {
+        "navigationBarTitleText": "设置",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/orders/index",
+      "style": {
+        "navigationBarTitleText": "我的订单",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/api-test/index",
+      "style": {
+        "navigationBarTitleText": "API测试",
+        "enablePullDownRefresh": false
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "入舍",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#F6F8FA"
+  },
+  "tabBar": {
+    "color": "#9CA3AF",
+    "selectedColor": "#4F46E5",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页",
+        "iconPath": "static/icons/home.png",
+        "selectedIconPath": "static/icons/home-active.png"
+      },
+      {
+        "pagePath": "pages/solution-list/index",
+        "text": "方案",
+        "iconPath": "static/icons/solution.png",
+        "selectedIconPath": "static/icons/solution-active.png"
+      },
+      {
+        "pagePath": "pages/photo-diagnosis/index",
+        "text": "拍照",
+        "iconPath": "static/icons/camera.png",
+        "selectedIconPath": "static/icons/camera-active.png"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的",
+        "iconPath": "static/icons/profile.png",
+        "selectedIconPath": "static/icons/profile-active.png"
+      }
+    ]
+  }
+} 

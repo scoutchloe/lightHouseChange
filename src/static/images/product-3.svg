@@ -1,0 +1,20 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景 -->
+  <rect width="200" height="200" fill="#F8FAFC"/>
+  <!-- 台灯底座 -->
+  <ellipse cx="100" cy="150" rx="25" ry="8" fill="#374151"/>
+  <!-- 台灯杆 -->
+  <rect x="98" y="100" width="4" height="50" fill="#6B7280"/>
+  <!-- 台灯罩 -->
+  <path d="M70 100 Q100 80 130 100 L120 110 Q100 90 80 110 Z" fill="#F59E0B"/>
+  <!-- 台灯罩边缘 -->
+  <path d="M70 100 Q100 80 130 100" stroke="#D97706" stroke-width="2" fill="none"/>
+  <path d="M80 110 Q100 90 120 110" stroke="#D97706" stroke-width="2" fill="none"/>
+  <!-- 开关 -->
+  <circle cx="105" cy="125" r="3" fill="#EF4444"/>
+  <!-- 光线效果 -->
+  <path d="M85 110 Q100 95 115 110" stroke="#FEF3C7" stroke-width="3" fill="none" opacity="0.6"/>
+  <path d="M80 115 Q100 100 120 115" stroke="#FEF3C7" stroke-width="2" fill="none" opacity="0.4"/>
+  <!-- 标题 -->
+  <text x="100" y="180" text-anchor="middle" fill="#374151" font-size="14" font-family="Arial">现代台灯</text>
+</svg> 

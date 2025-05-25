@@ -1,0 +1,13 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 爱心主体 -->
+  <path d="M60 85L45 70C35 60 35 45 45 35C50 30 55 30 60 35C65 30 70 30 75 35C85 45 85 60 75 70L60 85Z" fill="#E5E7EB" stroke="#D1D5DB" stroke-width="2"/>
+  <!-- 爱心内部装饰 -->
+  <circle cx="52" cy="45" r="3" fill="#F3F4F6"/>
+  <circle cx="68" cy="45" r="3" fill="#F3F4F6"/>
+  <!-- 星星装饰 -->
+  <path d="M25 25L27 30L32 30L28 33L30 38L25 35L20 38L22 33L18 30L23 30L25 25Z" fill="#F9FAFB"/>
+  <path d="M95 30L97 35L102 35L98 38L100 43L95 40L90 43L92 38L88 35L93 35L95 30Z" fill="#F9FAFB"/>
+  <path d="M85 15L86 18L89 18L87 20L88 23L85 21L82 23L83 20L81 18L84 18L85 15Z" fill="#F9FAFB"/>
+  <!-- 背景装饰圆圈 -->
+  <circle cx="60" cy="60" r="50" fill="none" stroke="#F9FAFB" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+</svg> 

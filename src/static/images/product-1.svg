@@ -1,0 +1,21 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景 -->
+  <rect width="200" height="200" fill="#F8FAFC"/>
+  <!-- 沙发主体 -->
+  <rect x="40" y="80" width="120" height="60" rx="8" fill="#6B7280"/>
+  <!-- 沙发靠背 -->
+  <rect x="40" y="60" width="120" height="30" rx="8" fill="#4B5563"/>
+  <!-- 沙发扶手 -->
+  <rect x="30" y="70" width="20" height="50" rx="8" fill="#4B5563"/>
+  <rect x="150" y="70" width="20" height="50" rx="8" fill="#4B5563"/>
+  <!-- 沙发腿 -->
+  <rect x="50" y="140" width="8" height="15" fill="#374151"/>
+  <rect x="70" y="140" width="8" height="15" fill="#374151"/>
+  <rect x="122" y="140" width="8" height="15" fill="#374151"/>
+  <rect x="142" y="140" width="8" height="15" fill="#374151"/>
+  <!-- 装饰枕头 -->
+  <circle cx="70" cy="85" r="12" fill="#F59E0B"/>
+  <circle cx="130" cy="85" r="12" fill="#EF4444"/>
+  <!-- 标题 -->
+  <text x="100" y="180" text-anchor="middle" fill="#374151" font-size="14" font-family="Arial">现代简约沙发</text>
+</svg> 

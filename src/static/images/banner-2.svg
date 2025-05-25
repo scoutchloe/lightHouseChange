@@ -1,0 +1,28 @@
+<svg width="375" height="180" viewBox="0 0 375 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景渐变 -->
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4F46E5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7C3AED;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="375" height="180" fill="url(#bg2)"/>
+  
+  <!-- 装饰图形 -->
+  <circle cx="50" cy="30" r="25" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="330" cy="50" r="35" fill="rgba(255,255,255,0.1)"/>
+  <rect x="300" y="120" width="30" height="30" rx="6" fill="rgba(255,255,255,0.1)"/>
+  
+  <!-- 主要内容 -->
+  <text x="30" y="80" fill="white" font-size="24" font-weight="bold" font-family="Arial">智能家居</text>
+  <text x="30" y="105" fill="white" font-size="24" font-weight="bold" font-family="Arial">解决方案</text>
+  <text x="30" y="130" fill="rgba(255,255,255,0.9)" font-size="14" font-family="Arial">科技让生活更便捷</text>
+  
+  <!-- 装饰科技图标 -->
+  <rect x="280" y="70" width="40" height="25" rx="4" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="285" cy="77" r="2" fill="rgba(255,255,255,0.4)"/>
+  <circle cx="290" cy="77" r="2" fill="rgba(255,255,255,0.4)"/>
+  <circle cx="295" cy="77" r="2" fill="rgba(255,255,255,0.4)"/>
+  <rect x="285" y="85" width="25" height="2" fill="rgba(255,255,255,0.3)"/>
+  <rect x="285" y="88" width="20" height="2" fill="rgba(255,255,255,0.3)"/>
+</svg> 

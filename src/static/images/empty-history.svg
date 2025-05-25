@@ -1,0 +1,17 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 时钟主体 -->
+  <circle cx="60" cy="60" r="30" fill="#E5E7EB" stroke="#D1D5DB" stroke-width="2"/>
+  <!-- 时钟指针 -->
+  <line x1="60" y1="60" x2="60" y2="40" stroke="#9CA3AF" stroke-width="3" stroke-linecap="round"/>
+  <line x1="60" y1="60" x2="75" y2="60" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/>
+  <!-- 时钟刻度 -->
+  <circle cx="60" cy="35" r="2" fill="#D1D5DB"/>
+  <circle cx="85" cy="60" r="2" fill="#D1D5DB"/>
+  <circle cx="60" cy="85" r="2" fill="#D1D5DB"/>
+  <circle cx="35" cy="60" r="2" fill="#D1D5DB"/>
+  <!-- 历史记录图标 -->
+  <path d="M45 20C45 15 50 10 60 10C70 10 75 15 75 20" stroke="#F3F4F6" stroke-width="2" fill="none"/>
+  <path d="M70 15L75 20L70 25" stroke="#F3F4F6" stroke-width="2" fill="none"/>
+  <!-- 背景装饰 -->
+  <circle cx="60" cy="60" r="45" fill="none" stroke="#F9FAFB" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
+</svg> 

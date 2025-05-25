@@ -1,0 +1,14 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 订单文档 -->
+  <rect x="30" y="25" width="60" height="70" rx="5" fill="#E5E7EB" stroke="#D1D5DB" stroke-width="2"/>
+  <!-- 文档内容线条 -->
+  <line x1="40" y1="40" x2="70" y2="40" stroke="#D1D5DB" stroke-width="2"/>
+  <line x1="40" y1="50" x2="80" y2="50" stroke="#D1D5DB" stroke-width="2"/>
+  <line x1="40" y1="60" x2="65" y2="60" stroke="#D1D5DB" stroke-width="2"/>
+  <line x1="40" y1="70" x2="75" y2="70" stroke="#D1D5DB" stroke-width="2"/>
+  <!-- 空状态标记 -->
+  <circle cx="60" cy="55" r="15" fill="none" stroke="#F3F4F6" stroke-width="3"/>
+  <path d="M55 55L58 58L65 51" stroke="#F3F4F6" stroke-width="2" fill="none"/>
+  <!-- 背景装饰 -->
+  <circle cx="60" cy="60" r="50" fill="none" stroke="#F9FAFB" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>
+</svg> 
