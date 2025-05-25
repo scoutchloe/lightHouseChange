@@ -7,7 +7,7 @@
 ## 技术栈
 
 - **Java**: 21
-- **Spring Boot**: 3.2.0
+- **Spring Boot**: 3.4.5
 - **Maven**: 项目管理工具
 - **Lombok**: 简化Java代码
 - **Jackson**: JSON处理
