@@ -51,9 +51,11 @@ lightHouseChange/
 ## 快速开始
 
 ### 前端开发
-1. 使用微信开发者工具打开`src`目录
-2. 配置后端API地址（默认: http://localhost:8081/api）
-3. 编译并预览
+0. 先使用 npx degit dcloudio/uni-preset-vue#vite-ts 项目名称, 创建环境。具体参考：https://ask.dcloud.net.cn/article/37834
+1. 使用HBuilderX 4.6 版本打开该项目, 运行到小程序端模拟器或使用npm run dev:mp-weixin
+2. 使用微信开发者工具打开`dist`目录即可
+3. 配置后端API地址（默认: http://localhost:8081/api）
+4. 编译并预览
 
 ### 后端开发
 1. 进入backend目录
