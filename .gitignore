@@ -7,12 +7,14 @@
 .curse/
 tools/
 prototype/
+database/
 
 # 忽略IDE和编辑器文件
 .vscode/
 .idea/
 *.swp
 *.swo
+*.sql
 *~
 
 # 忽略系统文件

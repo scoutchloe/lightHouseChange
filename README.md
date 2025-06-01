@@ -98,3 +98,38 @@ lightHouseChange/
 ## 许可证
 
 本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。 
+
+
+### v1.2.0 - 2025-06-01
+**推荐内容API功能上线**
+
+#### 新增功能
+- ✅ 推荐内容管理系统
+  - 新增 `recommendation` 数据表
+  - 实现推荐内容CRUD操作
+  - 支持热门推荐标记功能
+  - 支持排序权重管理
+  - 支持状态启用/禁用
+
+#### 新增接口
+- `GET /recommendations` - 获取推荐内容列表
+- `GET /recommendations/hot` - 获取热门推荐内容
+- `GET /recommendations/{id}` - 获取推荐内容详情
+- `POST /recommendations` - 创建推荐内容
+- `PUT /recommendations/{id}` - 更新推荐内容
+- `DELETE /recommendations/{id}` - 删除推荐内容
+
+#### 前端集成
+- 更新 `getRecommendations()` 接口，从Mock数据改为调用后端API
+- 更新 `getHotSolutions(limit)` 接口，从Mock数据改为调用后端API
+- 保持数据结构兼容性，确保前端无缝切换
+
+#### 数据库更新
+- 新增 `recommendation` 表结构
+- 插入6条初始化推荐内容数据
+- 包含3条热门推荐内容
+
+#### 技术改进
+- 使用MyBatis-Plus自动填充功能
+- 实现完整的分层架构（Entity、Mapper、Service、Controller）
+- 添加详细的接口文档和使用说明

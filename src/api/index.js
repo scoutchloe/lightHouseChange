@@ -149,8 +149,7 @@ export const api = {
   getApiInfo() {
     return request('/health/info')
   },
-  
-  // ========== 待实现的接口（使用Mock数据） ==========
+
   
   // 获取首页轮播图
   getBanners() {
@@ -158,16 +157,17 @@ export const api = {
     return request('/banners')
   },
   
+  // ========== 待实现的接口（使用Mock数据） ==========
+  
+  
   // 获取推荐内容
   getRecommendations() {
-    console.log('使用Mock数据: getRecommendations')
-    return mockRequest(mockData.recommendations)
+    return request('/recommendations')
   },
   
   // 获取热门解决方案
   getHotSolutions(limit = 3) {
-    console.log('使用Mock数据: getHotSolutions')
-    return mockRequest(mockData.recommendations.slice(0, limit))
+    return request(`/recommendations/hot?limit=${limit}`)
   },
   
   // 获取解决方案列表

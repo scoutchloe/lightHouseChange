@@ -15,7 +15,7 @@
       </view>
       <view class="solution-tags">
         <text 
-          v-for="(tag, index) in solution.tags" 
+          v-for="(tag, index) in solution.tagsArray" 
           :key="index" 
           class="tag" 
           :class="{'tag-primary': index === 0, 'tag-gray': index !== 0}"

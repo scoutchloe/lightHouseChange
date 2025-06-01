@@ -51,7 +51,7 @@
             <text class="recommendation-desc">{{ item.description }}</text>
             <view class="recommendation-tags">
               <text 
-                v-for="(tag, index) in item.tags" 
+                v-for="(tag, index) in item.tagsArray" 
                 :key="index" 
                 class="tag" 
                 :class="{'tag-primary': index === 0, 'tag-gray': index !== 0}"

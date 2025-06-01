@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lighthouse.mapper.RecommendationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lighthouse.entity.Recommendation">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="price" property="price" />
+        <result column="benefits" property="benefits" />
+        <result column="rating" property="rating" />
+        <result column="description" property="description" />
+        <result column="image" property="image" />
+        <result column="tags" property="tags" />
+        <result column="sort" property="sort" />
+        <result column="status" property="status" />
+        <result column="is_hot" property="isHot" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, title, price, benefits, rating, description, image, tags, sort, status, is_hot, created_at, updated_at
+    </sql>
+
+    <!-- 获取启用状态的推荐内容列表，按排序权重降序 -->
+    <select id="findActiveRecommendationsOrderBySort" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM recommendation
+        WHERE status = 1
+        ORDER BY sort DESC, id ASC
+    </select>
+
+    <!-- 获取热门推荐内容 -->
+    <select id="findHotRecommendations" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM recommendation
+        WHERE status = 1 AND is_hot = 1
+        ORDER BY sort DESC, id ASC
+        <if test="limit != null">
+            LIMIT #{limit}
+        </if>
+    </select>
+
+    <!-- 根据状态查询推荐内容 -->
+    <select id="findByStatus" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM recommendation
+        WHERE status = #{status}
+        ORDER BY sort DESC, id ASC
+    </select>
+
+    <!-- 根据标题模糊查询 -->
+    <select id="findByTitleContaining" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM recommendation
+        WHERE title LIKE CONCAT('%', #{title}, '%')
+        ORDER BY sort DESC, id ASC
+    </select>
+
+    <!-- 查询所有推荐内容，按排序权重降序 -->
+    <select id="findAllOrderBySort" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM recommendation
+        ORDER BY sort DESC, id ASC
+    </select>
+
+</mapper> 

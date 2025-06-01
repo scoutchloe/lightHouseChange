@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lighthouse.mapper.BannerMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lighthouse.entity.Banner" >
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="image" property="image" />
+        <result column="link" property="link" />
+        <result column="sort" property="sort" />
+        <result column="status" property="status" />
+        <result column="is_tab_bar" property="isTabBar" />
+        <result column="description" property="description" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, title, image, link, sort, status, is_tab_bar, description, created_at, updated_at
+    </sql>
+
+    <!-- 获取启用状态的轮播图列表，按排序权重降序 -->
+    <select id="findActiveBannersOrderBySort" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM banners
+        WHERE status = 1
+        ORDER BY sort DESC, id ASC
+    </select>
+
+    <!-- 获取底部导航栏轮播图 -->
+    <select id="findTabBarBanners" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM banners
+        WHERE status = 1 AND is_tab_bar = 1
+        ORDER BY sort DESC, id ASC
+    </select>
+
+    <!-- 根据状态查询轮播图 -->
+    <select id="findByStatus" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM banners
+        WHERE status = #{status}
+        ORDER BY sort DESC, id ASC
+    </select>
+
+    <!-- 根据标题模糊查询 -->
+    <select id="findByTitleContaining" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM banner
+        WHERE title LIKE CONCAT('%', #{title}, '%')
+        ORDER BY sort DESC, id ASC
+    </select>
+
+    <!-- 查询所有轮播图，按排序权重降序 -->
+    <select id="findAllOrderBySort" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM banners
+        ORDER BY sort DESC, id ASC
+    </select>
+
+</mapper> 

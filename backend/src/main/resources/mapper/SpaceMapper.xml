@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lighthouse.mapper.SpaceMapper">
+
+    <!-- 结果映射 -->
+    <resultMap id="BaseResultMap" type="com.lighthouse.entity.Space">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="icon" property="icon" jdbcType="VARCHAR"/>
+        <result column="icon_color" property="iconColor" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="created_at" property="createdAt" jdbcType="TIMESTAMP"/>
+        <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 基础字段 -->
+    <sql id="Base_Column_List">
+        id, name, icon, icon_color, description, image, created_at, updated_at
+    </sql>
+
+    <!-- 查找所有空间，按ID排序 -->
+    <select id="findAllOrderById" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List"/>
+        FROM spaces 
+        ORDER BY id
+    </select>
+
+    <!-- 根据名称模糊查询 -->
+    <select id="findByNameContaining" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List"/>
+        FROM spaces 
+        WHERE name LIKE CONCAT('%', #{name}, '%')
+        ORDER BY id
+    </select>
+
+    <!-- 根据ID查询单个空间 -->
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List"/>
+        FROM spaces 
+        WHERE id = #{id}
+    </select>
+
+    <!-- 根据名称精确查询 -->
+    <select id="findByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List"/>
+        FROM spaces 
+        WHERE name = #{name}
+        LIMIT 1
+    </select>
+
+</mapper> 

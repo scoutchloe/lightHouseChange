@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lighthouse.mapper.ProblemMapper">
+
+    <!-- 结果映射 -->
+    <resultMap id="BaseResultMap" type="com.lighthouse.entity.Problem">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="icon" property="icon" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="space_id" property="spaceId" jdbcType="INTEGER"/>
+        <result column="created_at" property="createdAt" jdbcType="TIMESTAMP"/>
+        <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 基础字段 -->
+    <sql id="Base_Column_List">
+        id, name, icon, description, space_id, created_at, updated_at
+    </sql>
+
+    <!-- 根据空间ID查找问题列表，按ID排序 -->
+    <select id="findBySpaceIdOrderById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List"/>
+        FROM problems 
+        WHERE space_id = #{spaceId} 
+        ORDER BY id
+    </select>
+
+    <!-- 根据名称模糊查询 -->
+    <select id="findByNameContaining" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List"/>
+        FROM problems 
+        WHERE name LIKE CONCAT('%', #{name}, '%')
+        ORDER BY id
+    </select>
+
+    <!-- 根据空间ID和名称模糊查询 -->
+    <select id="findBySpaceIdAndNameContaining" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List"/>
+        FROM problems 
+        WHERE space_id = #{spaceId} 
+        AND name LIKE CONCAT('%', #{name}, '%')
+        ORDER BY id
+    </select>
+
+    <!-- 统计某个空间的问题数量 -->
+    <select id="countBySpaceId" parameterType="java.lang.Integer" resultType="long">
+        SELECT COUNT(*) 
+        FROM problems 
+        WHERE space_id = #{spaceId}
+    </select>
+
+    <!-- 根据ID查询单个问题 -->
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List"/>
+        FROM problems 
+        WHERE id = #{id}
+    </select>
+
+    <!-- 查询所有问题，按ID排序 -->
+    <select id="findAllOrderById" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List"/>
+        FROM problems 
+        ORDER BY id
+    </select>
+
+</mapper> 
