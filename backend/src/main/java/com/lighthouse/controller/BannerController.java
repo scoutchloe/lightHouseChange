@@ -3,6 +3,7 @@ package com.lighthouse.controller;
 import com.lighthouse.entity.Banner;
 import com.lighthouse.common.ApiResponse;
 import com.lighthouse.service.BannerService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/banners")
 //@CrossOrigin(origins = "*")
+@Tag(name = "轮播图接口")
 public class BannerController {
 
     @Autowired

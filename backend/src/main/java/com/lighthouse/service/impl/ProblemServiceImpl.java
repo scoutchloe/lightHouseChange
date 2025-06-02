@@ -1,9 +1,11 @@
 package com.lighthouse.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lighthouse.entity.Problem;
 import com.lighthouse.mapper.ProblemMapper;
+import com.lighthouse.response.ProblemResp;
 import com.lighthouse.service.ProblemService;
 import org.springframework.stereotype.Service;
 
@@ -21,4 +23,13 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
         queryWrapper.eq("space_id", spaceId);
         return list(queryWrapper);
     }
-} 
+
+    @Override
+    public List<ProblemResp.Problem> getProblemBySpaceId(Integer spaceId) {
+        LambdaQueryWrapper<Problem> lq = new  LambdaQueryWrapper<Problem>().eq(Problem::getSpaceId, spaceId);
+        List<Problem> list = list(lq);
+        return list.stream().map(v -> new ProblemResp.Problem(v.getId(), v.getName(),
+                        v.getIcon(), v.getDescription(), v.getSpaceId()))
+                .toList();
+    }
+}

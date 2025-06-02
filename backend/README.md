@@ -468,6 +468,15 @@ MyBatis-Plus提供代码生成器，可快速生成Entity、Mapper、Service等�
 
 ## 更新日志
 
+### v1.2.1 - 2025-06-02
+**api 文档功能上线**
+
+- [x] api 文档功能及开发api添加作者
+
+  - 新增api 文档地址: http://localhost:8081/api/doc.html
+  - :zap: 增加jdk record 作为响应输出.
+  - :tada: 增加虚拟线程测试
+
 ### v1.2.0 - 2025-06-01
 **推荐内容API功能上线**
 

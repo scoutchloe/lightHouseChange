@@ -1,8 +1,13 @@
 package com.lighthouse.controller;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import com.lighthouse.common.ApiResponse;
 import com.lighthouse.entity.Problem;
+import com.lighthouse.response.ProblemResp;
 import com.lighthouse.service.ProblemService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +23,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/problems")
+@Tag(name = "问题类型相关")
+@ApiSupport(author = "李白")
 public class ProblemsController {
 
     @Autowired
@@ -41,8 +48,10 @@ public class ProblemsController {
      * 根据空间ID获取问题列表（路径参数方式）
      */
     @GetMapping("/space/{spaceId}")
-    public ApiResponse<List<Problem>> getProblemsBySpaceId(@PathVariable Integer spaceId) {
-        List<Problem> problems = problemService.getBySpaceId(spaceId);
+    @Operation(summary = "根据空间ID获取问题列表")
+    @ApiOperationSupport(author = "张佳怡")
+    public ApiResponse<List<ProblemResp.Problem>> getProblemsBySpaceId(@PathVariable Integer spaceId) {
+        List<ProblemResp.Problem> problems = problemService.getProblemBySpaceId(spaceId);
         return ApiResponse.success(problems);
     }
 

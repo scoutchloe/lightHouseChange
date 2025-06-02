@@ -57,6 +57,20 @@ cors:
   allowed-headers: "*"
   allow-credentials: true
 
+
+# knife4j api 文档配置
+knife4j:
+  production: false
+  basic:
+    enable: true
+    username: admin
+    password: deepseek!23
+  enable: true
+  setting:
+    enable-open-api: true
+    language: zh_cn
+    enable-footer: false
+    enable-swagger-models: false
 ---
 spring:
   config:

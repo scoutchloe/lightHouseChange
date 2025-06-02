@@ -1,8 +1,11 @@
 package com.lighthouse.controller;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import com.lighthouse.common.ApiResponse;
 import com.lighthouse.entity.Space;
 import com.lighthouse.service.SpaceService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +21,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/spaces")
+@Tag(name = "空间类型相关")
+@ApiSupport(author = "scoutChloe")
 public class SpacesController {
 
     @Autowired

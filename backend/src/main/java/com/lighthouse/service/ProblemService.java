@@ -2,6 +2,7 @@ package com.lighthouse.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lighthouse.entity.Problem;
+import com.lighthouse.response.ProblemResp;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface ProblemService extends IService<Problem> {
      * 根据空间ID获取问题列表
      */
     List<Problem> getBySpaceId(Integer spaceId);
+
+    List<ProblemResp.Problem> getProblemBySpaceId(Integer spaceId);
 } 

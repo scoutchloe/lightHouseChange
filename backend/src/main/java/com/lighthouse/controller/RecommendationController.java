@@ -3,6 +3,7 @@ package com.lighthouse.controller;
 import com.lighthouse.entity.Recommendation;
 import com.lighthouse.common.ApiResponse;
 import com.lighthouse.service.RecommendationService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/recommendations")
+@Tag(name = "推荐内容相关")
 public class RecommendationController {
 
     @Autowired
