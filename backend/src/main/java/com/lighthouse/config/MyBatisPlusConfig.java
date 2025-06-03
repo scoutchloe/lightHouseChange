@@ -21,7 +21,9 @@ public class MyBatisPlusConfig {
         
         // 分页插件
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
-        
+
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.POSTGRE_SQL));
+
         return interceptor;
     }
 

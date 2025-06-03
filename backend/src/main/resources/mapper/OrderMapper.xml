@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lighthouse.mapper.OrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lighthouse.entity.Order">
+        <id column="id" property="id" />
+        <result column="order_no" property="orderNo" />
+        <result column="user_id" property="userId" />
+        <result column="order_type" property="orderType" />
+        <result column="order_status" property="orderStatus" />
+        <result column="payment_status" property="paymentStatus" />
+        <result column="total_amount" property="totalAmount" />
+        <result column="discount_amount" property="discountAmount" />
+        <result column="shipping_fee" property="shippingFee" />
+        <result column="actual_amount" property="actualAmount" />
+        <result column="payment_method" property="paymentMethod" />
+        <result column="payment_time" property="paymentTime" />
+        <result column="shipping_address_id" property="shippingAddressId" />
+        <result column="shipping_name" property="shippingName" />
+        <result column="shipping_phone" property="shippingPhone" />
+        <result column="shipping_address" property="shippingAddress" />
+        <result column="shipping_time" property="shippingTime" />
+        <result column="delivery_time" property="deliveryTime" />
+        <result column="completion_time" property="completionTime" />
+        <result column="cancel_reason" property="cancelReason" />
+        <result column="cancel_time" property="cancelTime" />
+        <result column="remark" property="remark" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+    </resultMap>
+
+    <!-- 订单状态统计结果映射 -->
+    <resultMap id="OrderStatusCountResultMap" type="com.lighthouse.mapper.OrderMapper$OrderStatusCount">
+        <result column="order_status" property="orderStatus" />
+        <result column="count" property="count" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, order_no, user_id, order_type, order_status, payment_status, 
+        total_amount, discount_amount, shipping_fee, actual_amount, 
+        payment_method, payment_time, shipping_address_id, shipping_name, 
+        shipping_phone, shipping_address, shipping_time, delivery_time, 
+        completion_time, cancel_reason, cancel_time, remark, created_at, updated_at
+    </sql>
+
+    <!-- 根据用户ID分页查询订单列表 -->
+    <select id="selectOrdersByUserId" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM "orders"
+        WHERE user_id = #{userId}
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 根据用户ID和订单状态分页查询订单列表 -->
+    <select id="selectOrdersByUserIdAndStatus" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM "orders"
+        WHERE user_id = #{userId} AND order_status = #{orderStatus}
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 根据订单号查询订单 -->
+    <select id="selectByOrderNo" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM "orders"
+        WHERE order_no = #{orderNo}
+    </select>
+
+    <!-- 统计用户各状态订单数量 -->
+    <select id="countOrdersByUserIdAndStatus" resultMap="OrderStatusCountResultMap">
+        SELECT order_status, COUNT(*) as count
+        FROM "orders"
+        WHERE user_id = #{userId}
+        GROUP BY order_status
+    </select>
+
+    <!-- 根据订单状态查询订单列表 -->
+    <select id="selectOrdersByStatus" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM "orders"
+        WHERE order_status = #{orderStatus}
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 根据支付状态查询订单列表 -->
+    <select id="selectOrdersByPaymentStatus" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM "orders"
+        WHERE payment_status = #{paymentStatus}
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 根据订单类型查询订单列表 -->
+    <select id="selectOrdersByType" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM "orders"
+        WHERE order_type = #{orderType}
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 根据时间范围查询订单 -->
+    <select id="selectOrdersByDateRange" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM "orders"
+        WHERE created_at BETWEEN #{startDate} AND #{endDate}
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 查询用户最近的订单 -->
+    <select id="selectRecentOrdersByUserId" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM "orders"
+        WHERE user_id = #{userId}
+        ORDER BY created_at DESC
+        LIMIT #{limit}
+    </select>
+
+    <!-- 统计订单总数 -->
+    <select id="countTotalOrders" resultType="long">
+        SELECT COUNT(*)
+        FROM "orders"
+    </select>
+
+    <!-- 统计用户订单总数 -->
+    <select id="countOrdersByUserId" resultType="long">
+        SELECT COUNT(*)
+        FROM "orders"
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 统计指定状态的订单数量 -->
+    <select id="countOrdersByStatus" resultType="long">
+        SELECT COUNT(*)
+        FROM "orders"
+        WHERE order_status = #{orderStatus}
+    </select>
+
+    <!-- 查询待处理的订单（待付款、已付款） -->
+    <select id="selectPendingOrders" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM "orders"
+        WHERE order_status IN ('PENDING_PAYMENT', 'PAID')
+        ORDER BY created_at ASC
+    </select>
+
+</mapper> 

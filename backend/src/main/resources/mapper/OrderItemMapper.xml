@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lighthouse.mapper.OrderItemMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lighthouse.entity.OrderItem">
+        <id column="id" property="id" />
+        <result column="order_id" property="orderId" />
+        <result column="item_type" property="itemType" />
+        <result column="item_id" property="itemId" />
+        <result column="item_name" property="itemName" />
+        <result column="item_image" property="itemImage" />
+        <result column="item_description" property="itemDescription" />
+        <result column="unit_price" property="unitPrice" />
+        <result column="quantity" property="quantity" />
+        <result column="total_price" property="totalPrice" />
+        <result column="specifications" property="specifications" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, order_id, item_type, item_id, item_name, item_image, 
+        item_description, unit_price, quantity, total_price, 
+        specifications, created_at, updated_at
+    </sql>
+
+    <!-- 根据订单ID查询订单项列表 -->
+    <select id="selectByOrderId" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM order_item
+        WHERE order_id = #{orderId}
+        ORDER BY created_at ASC
+    </select>
+
+    <!-- 根据订单ID列表批量查询订单项 -->
+    <select id="selectByOrderIds" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM order_item
+        WHERE order_id IN
+        <foreach collection="orderIds" item="orderId" open="(" separator="," close=")">
+            #{orderId}
+        </foreach>
+        ORDER BY order_id, created_at ASC
+    </select>
+
+    <!-- 根据商品类型和商品ID查询订单项 -->
+    <select id="selectByItemTypeAndId" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM order_item
+        WHERE item_type = #{itemType} AND item_id = #{itemId}
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 根据商品类型查询订单项 -->
+    <select id="selectByItemType" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM order_item
+        WHERE item_type = #{itemType}
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 根据商品ID查询订单项 -->
+    <select id="selectByItemId" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM order_item
+        WHERE item_id = #{itemId}
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 统计订单项总数 -->
+    <select id="countTotalOrderItems" resultType="long">
+        SELECT COUNT(*)
+        FROM order_item
+    </select>
+
+    <!-- 统计指定订单的订单项数量 -->
+    <select id="countByOrderId" resultType="long">
+        SELECT COUNT(*)
+        FROM order_item
+        WHERE order_id = #{orderId}
+    </select>
+
+    <!-- 统计指定商品的销售数量 -->
+    <select id="countSalesByItemTypeAndId" resultType="long">
+        SELECT COALESCE(SUM(quantity), 0)
+        FROM order_item oi
+        INNER JOIN "order" o ON oi.order_id = o.id
+        WHERE oi.item_type = #{itemType} 
+        AND oi.item_id = #{itemId}
+        AND o.order_status NOT IN ('CANCELLED', 'REFUNDED')
+    </select>
+
+    <!-- 查询热销商品（按销量排序） -->
+    <select id="selectHotSellingItems" resultMap="BaseResultMap">
+        SELECT oi.item_type, oi.item_id, oi.item_name, oi.item_image, 
+               SUM(oi.quantity) as total_quantity,
+               COUNT(DISTINCT oi.order_id) as order_count
+        FROM order_item oi
+        INNER JOIN "order" o ON oi.order_id = o.id
+        WHERE o.order_status NOT IN ('CANCELLED', 'REFUNDED')
+        GROUP BY oi.item_type, oi.item_id, oi.item_name, oi.item_image
+        ORDER BY total_quantity DESC
+        <if test="limit != null">
+            LIMIT #{limit}
+        </if>
+    </select>
+
+    <!-- 根据订单状态查询订单项 -->
+    <select id="selectByOrderStatus" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM order_item oi
+        INNER JOIN "order" o ON oi.order_id = o.id
+        WHERE o.order_status = #{orderStatus}
+        ORDER BY oi.created_at DESC
+    </select>
+
+    <!-- 查询用户购买的所有商品 -->
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM order_item oi
+        INNER JOIN "order" o ON oi.order_id = o.id
+        WHERE o.user_id = #{userId}
+        ORDER BY oi.created_at DESC
+    </select>
+
+    <!-- 查询用户购买的指定类型商品 -->
+    <select id="selectByUserIdAndItemType" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM order_item oi
+        INNER JOIN "order" o ON oi.order_id = o.id
+        WHERE o.user_id = #{userId} AND oi.item_type = #{itemType}
+        ORDER BY oi.created_at DESC
+    </select>
+
+    <!-- 统计用户购买的商品总数量 -->
+    <select id="countItemsByUserId" resultType="long">
+        SELECT COALESCE(SUM(oi.quantity), 0)
+        FROM order_item oi
+        INNER JOIN "order" o ON oi.order_id = o.id
+        WHERE o.user_id = #{userId}
+        AND o.order_status NOT IN ('CANCELLED', 'REFUNDED')
+    </select>
+
+    <!-- 查询指定时间范围内的订单项 -->
+    <select id="selectByDateRange" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM order_item oi
+        INNER JOIN "order" o ON oi.order_id = o.id
+        WHERE o.created_at BETWEEN #{startDate} AND #{endDate}
+        ORDER BY oi.created_at DESC
+    </select>
+
+    <!-- 批量插入订单项 -->
+    <insert id="batchInsert" parameterType="list">
+        INSERT INTO order_item (
+            order_id, item_type, item_id, item_name, item_image, 
+            item_description, unit_price, quantity, total_price, 
+            specifications, created_at, updated_at
+        ) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+                #{item.orderId}, #{item.itemType}, #{item.itemId}, 
+                #{item.itemName}, #{item.itemImage}, #{item.itemDescription}, 
+                #{item.unitPrice}, #{item.quantity}, #{item.totalPrice}, 
+                #{item.specifications}, #{item.createdAt}, #{item.updatedAt}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 根据订单ID删除订单项 -->
+    <delete id="deleteByOrderId">
+        DELETE FROM order_item WHERE order_id = #{orderId}
+    </delete>
+
+    <!-- 根据订单ID列表批量删除订单项 -->
+    <delete id="deleteByOrderIds">
+        DELETE FROM order_item
+        WHERE order_id IN
+        <foreach collection="orderIds" item="orderId" open="(" separator="," close=")">
+            #{orderId}
+        </foreach>
+    </delete>
+
+</mapper> 

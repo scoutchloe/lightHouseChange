@@ -1,7 +1,7 @@
 package com.lighthouse.controller;
 
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.github.xiaoymin.knife4j.annotations.ApiSupport;
+import com.github.xingfudeshi.knife4j.annotations.ApiOperationSupport;
+import com.github.xingfudeshi.knife4j.annotations.ApiSupport;
 import com.lighthouse.common.ApiResponse;
 import com.lighthouse.entity.Space;
 import com.lighthouse.service.SpaceService;
