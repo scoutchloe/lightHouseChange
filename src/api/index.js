@@ -126,6 +126,22 @@ const mockRequest = (data, delay = 500) => {
   })
 }
 
+// 构建查询字符串的工具函数 - 兼容微信小程序环境
+const buildQueryString = (params) => {
+  if (!params || typeof params !== 'object') {
+    return ''
+  }
+  
+  const queryParts = []
+  for (const [key, value] of Object.entries(params)) {
+    if (value !== null && value !== undefined && value !== '') {
+      queryParts.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+    }
+  }
+  
+  return queryParts.length > 0 ? `?${queryParts.join('&')}` : ''
+}
+
 // API接口
 export const api = {
   // ========== 已实现的后端接口 ==========
@@ -167,25 +183,19 @@ export const api = {
   
   // 获取热门解决方案
   getHotSolutions(limit = 3) {
-    return request(`/recommendations/hot?limit=${limit}`)
+    return request(`/solutions/hot?limit=${limit}`)
   },
   
   // 获取解决方案列表
   getSolutions(params = {}) {
-    console.log('使用Mock数据: getSolutions', params)
-    return mockRequest({
-      list: mockData.recommendations,
-      total: mockData.recommendations.length,
-      page: params.page || 1,
-      pageSize: params.pageSize || 10
-    })
+    const queryString = buildQueryString(params)
+    const url = `/solutions${queryString}`
+    return request(url)
   },
   
   // 获取解决方案详情
   getSolutionDetail(id) {
-    console.log('使用Mock数据: getSolutionDetail', id)
-    const solution = mockData.recommendations.find(item => item.id == id)
-    return mockRequest(solution || mockData.recommendations[0])
+    return request(`/solutions/${id}`)
   },
   
   // 用户登录
@@ -222,8 +232,24 @@ export const api = {
   
   // 添加到收藏
   addToFavorites(itemId, itemType = 'solution') {
+    if (itemType === 'solution') {
+      return request(`/solutions/${itemId}/favorite`, {
+        method: 'POST'
+      })
+    }
     console.log('使用Mock数据: addToFavorites', itemId, itemType)
     return mockRequest({ success: true, message: '收藏成功' })
+  },
+  
+  // 取消收藏
+  removeFromFavorites(itemId, itemType = 'solution') {
+    if (itemType === 'solution') {
+      return request(`/solutions/${itemId}/favorite`, {
+        method: 'DELETE'
+      })
+    }
+    console.log('使用Mock数据: removeFromFavorites', itemId, itemType)
+    return mockRequest({ success: true, message: '取消收藏成功' })
   },
   
   // 获取收藏列表

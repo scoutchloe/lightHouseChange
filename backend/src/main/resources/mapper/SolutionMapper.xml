@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lighthouse.mapper.SolutionMapper">
+
+    <!-- 通用结果映射 -->
+    <resultMap id="BaseResultMap" type="com.lighthouse.entity.Solution">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="rating" property="rating" jdbcType="DECIMAL"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="LONGVARCHAR"/>
+        <result column="space_id" property="spaceId" jdbcType="INTEGER"/>
+        <result column="problems" property="problems" jdbcType="VARCHAR"/>
+        <result column="tags" property="tags" jdbcType="VARCHAR"/>
+        <result column="benefits" property="benefits" jdbcType="LONGVARCHAR"/>
+        <result column="materials" property="materials" jdbcType="LONGVARCHAR"/>
+        <result column="steps" property="steps" jdbcType="LONGVARCHAR"/>
+        <result column="difficulty_level" property="difficultyLevel" jdbcType="TINYINT"/>
+        <result column="time_required" property="timeRequired" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="BOOLEAN"/>
+        <result column="is_hot" property="isHot" jdbcType="BOOLEAN"/>
+        <result column="view_count" property="viewCount" jdbcType="INTEGER"/>
+        <result column="favorite_count" property="favoriteCount" jdbcType="INTEGER"/>
+        <result column="sort_order" property="sortOrder" jdbcType="INTEGER"/>
+        <result column="created_at" property="createdAt" jdbcType="TIMESTAMP"/>
+        <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 通用列字段 -->
+    <sql id="Base_Column_List">
+        id, title, price, rating, image, description, space_id, problems, tags, 
+        benefits, materials, steps, difficulty_level, time_required, status, 
+        is_hot, view_count, favorite_count, sort_order, created_at, updated_at
+    </sql>
+
+    <!-- 通用WHERE条件 -->
+    <sql id="Base_Where_Clause">
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="title != null and title != ''">
+                AND title LIKE CONCAT('%', #{title}, '%')
+            </if>
+            <if test="spaceId != null">
+                AND space_id = #{spaceId}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+            <if test="isHot != null">
+                AND is_hot = #{isHot}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询启用状态的解决方案 -->
+    <select id="selectActiveSolutions" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM solutions
+        WHERE status = 1
+        ORDER BY sort_order DESC, created_at DESC
+    </select>
+
+    <!-- 根据空间ID分页查询解决方案 -->
+    <select id="selectSolutionsBySpaceId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM solutions
+        WHERE status = 1 AND space_id = #{spaceId}
+        ORDER BY sort_order DESC, created_at DESC
+    </select>
+
+    <!-- 根据关键词搜索解决方案 -->
+    <select id="searchSolutions" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM solutions
+        WHERE status = 1
+        AND (
+            title LIKE CONCAT('%', #{keyword}, '%')
+            OR description LIKE CONCAT('%', #{keyword}, '%')
+        )
+        ORDER BY sort_order DESC, created_at DESC
+    </select>
+
+    <!-- 获取热门解决方案 (非分页查询，保留LIMIT) -->
+    <select id="selectHotSolutions" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM solutions
+        WHERE status = 1 AND is_hot = 1
+        ORDER BY sort_order DESC, view_count DESC
+        LIMIT #{limit}
+    </select>
+
+    <!-- 根据多个条件查询解决方案（支持动态查询） -->
+    <select id="selectSolutionsByCondition" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM solutions
+        <include refid="Base_Where_Clause"/>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="orderBy == null or orderBy == ''">
+            ORDER BY sort_order DESC, created_at DESC
+        </if>
+    </select>
+
+    <!-- 增加浏览次数 -->
+    <update id="incrementViewCount">
+        UPDATE solutions 
+        SET view_count = view_count + 1
+        WHERE id = #{id}
+    </update>
+
+    <!-- 增加收藏次数 -->
+    <update id="incrementFavoriteCount">
+        UPDATE solutions 
+        SET favorite_count = favorite_count + 1
+        WHERE id = #{id}
+    </update>
+
+    <!-- 减少收藏次数 -->
+    <update id="decrementFavoriteCount">
+        UPDATE solutions 
+        SET favorite_count = favorite_count - 1
+        WHERE id = #{id} AND favorite_count > 0
+    </update>
+
+    <!-- 批量更新解决方案状态 -->
+    <update id="updateSolutionStatus">
+        UPDATE solutions 
+        SET status = #{status}
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <!-- 批量更新热门标记 -->
+    <update id="updateHotStatus">
+        UPDATE solutions 
+        SET is_hot = #{isHot}
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <!-- 根据空间ID获取解决方案数量 -->
+    <select id="countSolutionsBySpaceId" resultType="int">
+        SELECT COUNT(*)
+        FROM solutions
+        WHERE status = 1 AND space_id = #{spaceId}
+    </select>
+
+    <!-- 获取热门解决方案数量 -->
+    <select id="countHotSolutions" resultType="int">
+        SELECT COUNT(*)
+        FROM solutions
+        WHERE status = 1 AND is_hot = 1
+    </select>
+
+    <!-- 根据标签搜索解决方案 (分页查询) -->
+    <select id="selectSolutionsByTag" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM solutions
+        WHERE status = 1
+        AND JSON_CONTAINS(tags, JSON_QUOTE(#{tag}))
+        ORDER BY sort_order DESC, created_at DESC
+    </select>
+
+    <!-- 根据问题ID搜索解决方案 (分页查询) -->
+    <select id="selectSolutionsByProblemId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM solutions
+        WHERE status = 1
+        AND JSON_CONTAINS(problems, CAST(#{problemId} AS JSON))
+        ORDER BY sort_order DESC, created_at DESC
+    </select>
+
+    <!-- 获取最受欢迎的解决方案（按收藏数排序，非分页查询，保留LIMIT） -->
+    <select id="selectMostFavoriteSolutions" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM solutions
+        WHERE status = 1
+        ORDER BY favorite_count DESC, view_count DESC
+        LIMIT #{limit}
+    </select>
+
+    <!-- 获取最新的解决方案 (非分页查询，保留LIMIT) -->
+    <select id="selectLatestSolutions" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM solutions
+        WHERE status = 1
+        ORDER BY created_at DESC
+        LIMIT #{limit}
+    </select>
+
+</mapper> 
