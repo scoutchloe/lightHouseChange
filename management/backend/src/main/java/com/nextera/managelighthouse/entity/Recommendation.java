@@ -1,46 +1,56 @@
-package com.lighthouse.entity;
+package com.nextera.managelighthouse.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * 轮播图实体类
+ * 推荐内容实体
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@TableName("banners")
-public class Banner {
+@EqualsAndHashCode(callSuper = false)
+@TableName("recommendation")
+public class Recommendation {
     
-    /**
-     * 轮播图ID
-     */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     
     /**
-     * 轮播图标题
+     * 推荐内容标题
      */
     @TableField("title")
     private String title;
+
+    @TableField("price")
+    private BigDecimal price;
+
+    @TableField("benefits")
+    private String benefits;
+
+    @TableField("rating")
+    private Float rating;
     
     /**
-     * 轮播图图片URL
+     * 推荐内容描述
+     */
+    @TableField("description")
+    private String description;
+    
+    /**
+     * 推荐内容图片URL
      */
     @TableField("image")
     private String image;
     
     /**
-     * 跳转链接
+     * 标签（JSON格式存储）
      */
-    @TableField("link")
-    private String link;
+    @TableField("tags")
+    private String tags;
     
     /**
      * 排序权重，数字越大越靠前
@@ -49,22 +59,16 @@ public class Banner {
     private Integer sort;
     
     /**
-     * 状态：1-启用，0-禁用
+     * 状态：0-禁用，1-启用
      */
     @TableField("status")
-    private Boolean status;
+    private Integer status;
     
     /**
-     * 是否为底部导航栏轮播图：1-是，0-否
+     * 是否为热门推荐：0-否，1-是
      */
-    @TableField("is_tab_bar")
-    private Boolean isTabBar;
-    
-    /**
-     * 轮播图描述
-     */
-    @TableField("description")
-    private String description;
+    @TableField("is_hot")
+    private Integer isHot;
     
     /**
      * 创建时间
@@ -76,9 +80,10 @@ public class Banner {
      * 更新时间
      */
     @TableField(value = "updated_at", fill = FieldFill.INSERT_UPDATE)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
-
-        /**
+    
+    /**
      * 是否删除：0-未删除，1-已删除
      */
     @TableLogic

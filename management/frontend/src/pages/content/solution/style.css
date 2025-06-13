@@ -1,0 +1,55 @@
+.solution-page {
+  padding: 24px;
+  background: #f0f2f5;
+  min-height: 100vh;
+}
+
+.solution-page .search-form {
+  margin-bottom: 0;
+}
+
+.solution-page .search-form .ant-form-item {
+  margin-bottom: 16px;
+}
+
+.solution-page .table-card {
+  margin-top: 16px;
+}
+
+.solution-page .table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.solution-page .table-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.solution-modal .ant-form-item {
+  margin-bottom: 16px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .solution-page {
+    padding: 16px;
+  }
+  
+  .solution-page .search-form {
+    flex-direction: column;
+  }
+  
+  .solution-page .search-form .ant-form-item {
+    width: 100%;
+  }
+  
+  .solution-page .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+} 

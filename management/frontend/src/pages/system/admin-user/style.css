@@ -1,0 +1,85 @@
+.admin-user-page {
+  padding: 24px;
+}
+
+.admin-user-page .search-form {
+  margin-bottom: 0;
+}
+
+.admin-user-page .search-form .ant-form-item {
+  margin-bottom: 16px;
+}
+
+.admin-user-page .table-card {
+  margin-top: 16px;
+}
+
+.admin-user-page .table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.admin-user-page .table-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.admin-user-page .ant-table-scroll {
+  overflow-x: auto;
+}
+
+.admin-user-page .ant-avatar {
+  border: 1px solid #f0f0f0;
+}
+
+.admin-user-page .ant-modal-body {
+  padding: 24px;
+}
+
+.admin-user-page .ant-form-vertical .ant-form-item-label {
+  padding: 0 0 4px;
+}
+
+.admin-user-page .ant-form-vertical .ant-form-item-label > label {
+  font-weight: 500;
+}
+
+.admin-user-page .ant-btn-link {
+  padding: 0;
+  height: auto;
+  border: none;
+  background: transparent;
+}
+
+.admin-user-page .ant-btn-link:hover {
+  background: transparent;
+}
+
+.admin-user-page .ant-tag {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .admin-user-page {
+    padding: 16px;
+  }
+  
+  .admin-user-page .search-form {
+    display: block;
+  }
+  
+  .admin-user-page .search-form .ant-form-item {
+    display: block;
+    margin-right: 0;
+    margin-bottom: 16px;
+  }
+  
+  .admin-user-page .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+} 

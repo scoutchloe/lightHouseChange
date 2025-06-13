@@ -1,28 +1,21 @@
-package com.lighthouse.entity;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+package com.nextera.managelighthouse.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.time.LocalDateTime;
 
 /**
  * 问题类型实体
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@EqualsAndHashCode(callSuper = false)
 @TableName("problems")
 public class Problem {
     
-    /**
-     * 问题ID
-     */
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
     
     /**
      * 问题名称
@@ -46,7 +39,19 @@ public class Problem {
      * 所属空间ID
      */
     @TableField("space_id")
-    private Integer spaceId;
+    private Long spaceId;
+    
+    /**
+     * 状态：0-禁用，1-启用
+     */
+    @TableField("status")
+    private Integer status;
+    
+    /**
+     * 排序权重
+     */
+    @TableField("sort")
+    private Integer sort;
     
     /**
      * 创建时间
@@ -59,8 +64,8 @@ public class Problem {
      */
     @TableField(value = "updated_at", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedAt;
-
-        /**
+    
+    /**
      * 是否删除：0-未删除，1-已删除
      */
     @TableLogic

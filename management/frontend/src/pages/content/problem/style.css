@@ -1,0 +1,65 @@
+.problem-page {
+  padding: 24px;
+  background: #f0f2f5;
+  min-height: 100vh;
+}
+
+.problem-page .search-form {
+  margin-bottom: 0;
+}
+
+.problem-page .search-form .ant-form-item {
+  margin-bottom: 16px;
+}
+
+.problem-page .table-card {
+  margin-top: 16px;
+}
+
+.problem-page .table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.problem-page .table-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.problem-modal .ant-form-item {
+  margin-bottom: 16px;
+}
+
+.problem-modal .ant-upload-list-picture-card .ant-upload-list-item {
+  width: 80px;
+  height: 80px;
+}
+
+.problem-modal .ant-upload-select-picture-card {
+  width: 80px;
+  height: 80px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .problem-page {
+    padding: 16px;
+  }
+  
+  .problem-page .search-form {
+    flex-direction: column;
+  }
+  
+  .problem-page .search-form .ant-form-item {
+    width: 100%;
+  }
+  
+  .problem-page .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+} 

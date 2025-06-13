@@ -1,0 +1,86 @@
+.system-config-page {
+  padding: 24px;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.system-config-page .ant-tabs-content-holder {
+  background: transparent;
+}
+
+.system-config-page .ant-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.system-config-page .ant-card-head-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.system-config-page .ant-form-item-label > label {
+  font-weight: 500;
+}
+
+.system-config-page .ant-divider {
+  margin: 24px 0 16px 0;
+  font-weight: 600;
+  color: #1890ff;
+}
+
+.system-config-page .ant-upload-select-picture-card {
+  width: 120px;
+  height: 120px;
+}
+
+.system-config-page .ant-upload-list-picture-card .ant-upload-list-item {
+  width: 120px;
+  height: 120px;
+}
+
+.system-config-page .ant-alert {
+  border-radius: 6px;
+}
+
+.system-config-page .ant-switch {
+  margin-right: 8px;
+}
+
+.system-config-page .ant-input-number {
+  width: 100%;
+}
+
+/* 表单布局优化 */
+.system-config-page .ant-form-vertical .ant-form-item-label {
+  padding-bottom: 4px;
+}
+
+.system-config-page .ant-form-item {
+  margin-bottom: 20px;
+}
+
+/* 按钮组样式 */
+.system-config-page .ant-space {
+  margin-top: 8px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .system-config-page {
+    padding: 16px;
+  }
+  
+  .system-config-page .ant-col {
+    margin-bottom: 16px;
+  }
+  
+  .system-config-page .ant-upload-select-picture-card {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .system-config-page .ant-upload-list-picture-card .ant-upload-list-item {
+    width: 100px;
+    height: 100px;
+  }
+} 

@@ -1,26 +1,19 @@
-package com.lighthouse.entity;
+package com.nextera.managelighthouse.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 
 /**
- * 轮播图实体类
+ * 轮播图实体
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@EqualsAndHashCode(callSuper = false)
 @TableName("banners")
 public class Banner {
     
-    /**
-     * 轮播图ID
-     */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     
@@ -49,16 +42,16 @@ public class Banner {
     private Integer sort;
     
     /**
-     * 状态：1-启用，0-禁用
+     * 状态：0-禁用，1-启用
      */
     @TableField("status")
-    private Boolean status;
+    private Integer status;
     
     /**
-     * 是否为底部导航栏轮播图：1-是，0-否
+     * 是否为底部导航栏轮播图：0-否，1-是
      */
     @TableField("is_tab_bar")
-    private Boolean isTabBar;
+    private Integer isTabBar;
     
     /**
      * 轮播图描述
@@ -77,8 +70,8 @@ public class Banner {
      */
     @TableField(value = "updated_at", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedAt;
-
-        /**
+    
+    /**
      * 是否删除：0-未删除，1-已删除
      */
     @TableLogic

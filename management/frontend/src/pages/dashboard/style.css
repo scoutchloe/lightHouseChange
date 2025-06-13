@@ -1,0 +1,219 @@
+/* 仪表盘页面 */
+.dashboard-page {
+  padding: 24px;
+  background: #f5f5f5;
+  min-height: calc(100vh - 64px - 70px); /* 减去header和footer高度 */
+}
+
+.dashboard-header {
+  margin-bottom: 24px;
+}
+
+.dashboard-header .ant-typography {
+  margin-bottom: 8px !important;
+}
+
+/* 统计卡片 */
+.stats-row {
+  margin-bottom: 24px;
+}
+
+.stats-card {
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  border: none !important;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.stats-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
+  transform: translateY(-2px);
+}
+
+.stats-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.stats-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.stats-info {
+  flex: 1;
+}
+
+.stats-info .ant-statistic-title {
+  color: #666 !important;
+  font-size: 14px !important;
+  margin-bottom: 4px !important;
+}
+
+.stats-info .ant-statistic-content {
+  margin-bottom: 8px !important;
+}
+
+.stats-trend {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+/* 最近订单卡片 */
+.recent-orders-card {
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  border: none !important;
+}
+
+.recent-orders-card .ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.recent-orders-card .ant-table-thead > tr > th {
+  background: #fafafa;
+  font-weight: 600;
+}
+
+/* 热门解决方案卡片 */
+.hot-solutions-card {
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  border: none !important;
+}
+
+.solutions-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.solution-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.solution-item:last-child {
+  border-bottom: none;
+}
+
+.solution-item:hover {
+  background: #fafafa;
+  margin: 0 -16px;
+  padding: 12px 16px;
+  border-radius: 8px;
+}
+
+.solution-rank {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1890ff, #096dd9);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.solution-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.solution-title {
+  display: block;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.solution-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+}
+
+/* 快速操作卡片 */
+.quick-actions-card {
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  border: none !important;
+}
+
+.quick-actions-card .ant-btn {
+  height: 48px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.quick-actions-card .ant-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.quick-actions-card .ant-btn-primary {
+  background: linear-gradient(135deg, #1890ff, #096dd9);
+  border: none;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .dashboard-page {
+    padding: 16px;
+  }
+  
+  .stats-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+  
+  .stats-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+  
+  .solution-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .solution-rank {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 576px) {
+  .dashboard-header h2 {
+    font-size: 20px !important;
+  }
+  
+  .stats-card .ant-card-body {
+    padding: 16px !important;
+  }
+  
+  .quick-actions-card .ant-btn {
+    height: 40px;
+    font-size: 14px;
+  }
+} 

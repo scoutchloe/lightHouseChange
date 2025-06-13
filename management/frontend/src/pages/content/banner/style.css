@@ -1,0 +1,55 @@
+.banner-page {
+  padding: 24px;
+  background: #f0f2f5;
+  min-height: 100vh;
+}
+
+.banner-page .search-form {
+  margin-bottom: 0;
+}
+
+.banner-page .search-form .ant-form-item {
+  margin-bottom: 16px;
+}
+
+.banner-page .table-card {
+  margin-top: 16px;
+}
+
+.banner-page .table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.banner-page .table-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.banner-modal .ant-form-item {
+  margin-bottom: 16px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .banner-page {
+    padding: 16px;
+  }
+  
+  .banner-page .search-form {
+    flex-direction: column;
+  }
+  
+  .banner-page .search-form .ant-form-item {
+    width: 100%;
+  }
+  
+  .banner-page .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}

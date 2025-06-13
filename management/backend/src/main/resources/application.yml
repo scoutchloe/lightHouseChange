@@ -1,0 +1,134 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: management-lighthouse-api
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+  
+  # 静态资源配置
+  web:
+    resources:
+      static-locations: classpath:/static/
+      add-mappings: true
+# 异步任务配置
+  task:
+    execution:
+      pool:
+        core-size: 5
+        max-size: 20
+        queue-capacity: 100
+        keep-alive: 60s
+      thread-name-prefix: lighthouse-task-
+
+  
+  # 数据库配置
+  datasource:
+    dynamic:
+      primary: master
+      strict: false
+      datasource:
+        master:
+          url: jdbc:mysql://127.0.0.1:3306/managementlightHouse?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+          username: root
+          password: 123456
+          driver-class-name: com.mysql.cj.jdbc.Driver
+        slave:
+          url: jdbc:mysql://127.0.0.1:3306/lightHouse?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+          username: root
+          password: 123456
+          driver-class-name: com.mysql.cj.jdbc.Driver
+
+#    url: jdbc:mysql://127.0.0.1:3306/managementlightHouse?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+#    #url: jdbc:mysql://127.0.0.1:3306/lightHouse?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+#    username: root
+#    password: 123456
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    hikari:
+      pool-name: HikariCP
+      minimum-idle: 5
+      maximum-pool-size: 20
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+# MyBatis-Plus配置
+mybatis-plus:
+  # 配置mapper xml文件路径
+  mapper-locations: classpath:mapper/**.xml
+  # 配置MyBatis数据返回类型别名
+  type-aliases-package: com.lighthouse.entity
+  configuration:
+    # 自动驼峰命名转换
+    map-underscore-to-camel-case: true
+    # 打印SQL语句
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  global-config:
+    db-config:
+      # 主键生成策略
+      id-type: auto
+
+
+# 跨域配置
+
+# 跨域配置
+cors:
+  allowed-origins: "*"
+  allowed-methods: "GET,POST,PUT,DELETE,OPTIONS"
+  allowed-headers: "*"
+  allow-credentials: true
+
+
+# JWT配置
+jwt:
+  secret: mySecretKey123456789012345678901234567890
+  expiration: 86400000  # 24小时，单位毫秒
+
+# 定时任务配置
+schedule:
+  enabled: true
+
+
+
+# knife4j api 文档配置
+knife4j:
+  production: false
+  basic:
+    enable: true
+    username: admin
+    password: deepseek!23
+  enable: true
+  setting:
+    enable-open-api: true
+    language: zh_cn
+    enable-footer: false
+    enable-swagger-models: false
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  
+logging:
+  level:
+    root: INFO
+    com.nextera: DEBUG
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+logging:
+  level:
+    root: WARN
+    com.nextera: INFO

@@ -153,6 +153,14 @@ public class Solution {
     @TableField(value = "updated_at", fill = FieldFill.INSERT_UPDATE)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
+
+
+        /**
+     * 是否删除：0-未删除，1-已删除
+     */
+    @TableLogic
+    @TableField("is_deleted")
+    private Integer isDeleted;
     
     // ========== 辅助方法 ==========
     

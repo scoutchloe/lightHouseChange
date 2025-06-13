@@ -5,6 +5,7 @@
 # 快照UI
 ![首页](snapshots/house1.png)
 ![设计页](snapshots/house2.png)
+![后端管理前端UI](snapshots/managementFrontend.png)
 
 ## 项目结构
 
@@ -99,6 +100,11 @@ lightHouseChange/
 
 本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。 
 
+### v1.2.1 2025-06-13
+** 管理端后端api 和管理端前端上线
+#### 新增功能
+ - ✅ 内容管理
+ - 系统管理
 
 ### v1.2.0 - 2025-06-01
 **推荐内容API功能上线**

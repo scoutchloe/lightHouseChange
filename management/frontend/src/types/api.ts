@@ -1,0 +1,213 @@
+// API响应基础类型
+export interface ApiResponse<T = any> {
+  code: number;
+  message: string;
+  data: T;
+  timestamp: number;
+}
+
+// 分页响应类型
+export interface PageResponse<T> {
+  records: T[];
+  total: number;
+  size: number;
+  current: number;
+  pages: number;
+}
+
+// 空间类型
+export interface Space {
+  id: number;
+  name: string;
+  icon: string;
+  iconColor: string;
+  description: string;
+  image: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// 问题类型
+export interface Problem {
+  id: number;
+  name: string;
+  icon: string;
+  description: string;
+  spaceId: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// 解决方案类型
+export interface Solution {
+  id: number;
+  title: string;
+  price: number;
+  rating: number;
+  image: string;
+  description: string;
+  spaceId: number;
+  problems: string; // JSON字符串
+  tags: string; // JSON字符串
+  benefits: string;
+  materials: string;
+  steps: string;
+  difficultyLevel: number; // 1-简单，2-中等，3-困难
+  timeRequired: string;
+  status: boolean;
+  isHot: boolean;
+  viewCount: number;
+  favoriteCount: number;
+  sortOrder: number;
+  createdAt: string;
+  updatedAt: string;
+  // 辅助字段
+  problemsArray?: number[];
+  tagsArray?: string[];
+}
+
+// 订单状态枚举
+export enum OrderStatus {
+  PENDING_PAYMENT = 'PENDING_PAYMENT',
+  PAID = 'PAID',
+  SHIPPED = 'SHIPPED',
+  DELIVERED = 'DELIVERED',
+  COMPLETED = 'COMPLETED',
+  CANCELLED = 'CANCELLED',
+  REFUNDED = 'REFUNDED'
+}
+
+// 支付状态枚举
+export enum PaymentStatus {
+  UNPAID = 'UNPAID',
+  PAID = 'PAID',
+  REFUNDED = 'REFUNDED'
+}
+
+// 支付方式枚举
+export enum PaymentMethod {
+  WECHAT = 'WECHAT',
+  ALIPAY = 'ALIPAY'
+}
+
+// 订单类型枚举
+export enum OrderType {
+  SOLUTION = 'SOLUTION',
+  PRODUCT = 'PRODUCT',
+  MIXED = 'MIXED'
+}
+
+// 订单项类型
+export interface OrderItem {
+  id: number;
+  orderId: number;
+  itemType: string;
+  itemId: number;
+  itemName: string;
+  itemImage: string;
+  itemPrice: number;
+  quantity: number;
+  totalPrice: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// 订单类型
+export interface Order {
+  id: number;
+  orderNo: string;
+  userId: number;
+  orderType: OrderType;
+  orderStatus: OrderStatus;
+  paymentStatus: PaymentStatus;
+  totalAmount: number;
+  discountAmount: number;
+  shippingFee: number;
+  actualAmount: number;
+  paymentMethod: PaymentMethod;
+  paymentTime: string;
+  shippingAddressId: number;
+  shippingName: string;
+  shippingPhone: string;
+  shippingAddress: string;
+  shippingTime: string;
+  deliveryTime: string;
+  completionTime: string;
+  cancelReason: string;
+  cancelTime: string;
+  remark: string;
+  createdAt: string;
+  updatedAt: string;
+  orderItems?: OrderItem[];
+}
+
+// 轮播图类型
+export interface Banner {
+  id: number;
+  title: string;
+  image: string;
+  linkType: string;
+  linkValue: string;
+  position: string;
+  sortOrder: number;
+  status: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// 推荐内容类型
+export interface Recommendation {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  tags: string; // JSON字符串
+  sortOrder: number;
+  status: boolean;
+  isHot: boolean;
+  createdAt: string;
+  updatedAt: string;
+  tagsArray?: string[];
+}
+
+// 用户类型
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  phone: string;
+  avatar: string;
+  status: boolean;
+  roleId: number;
+  roleName: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// 角色类型
+export interface Role {
+  id: number;
+  name: string;
+  code: string;
+  description: string;
+  status: boolean;
+  permissions: string[]; // 权限代码数组
+  createdAt: string;
+  updatedAt: string;
+}
+
+// 权限类型
+export interface Permission {
+  id: number;
+  name: string;
+  code: string;
+  type: 'menu' | 'button'; // 菜单权限或按钮权限
+  parentId: number;
+  path: string;
+  component: string;
+  icon: string;
+  sortOrder: number;
+  status: boolean;
+  createdAt: string;
+  updatedAt: string;
+} 
