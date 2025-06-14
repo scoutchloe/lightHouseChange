@@ -276,7 +276,7 @@ const SolutionPage: React.FC = () => {
     },
     {
       title: '难度',
-      dataIndex: 'difficulty',
+      dataIndex: 'difficultyLevel',
       width: 80,
       render: (difficulty: number) => {
         const config = difficultyMap[difficulty as keyof typeof difficultyMap];
@@ -287,7 +287,7 @@ const SolutionPage: React.FC = () => {
     },
     {
       title: '预计时间',
-      dataIndex: 'estimatedTime',
+      dataIndex: 'timeRequired',
       width: 100,
       render: (time: number) => time ? `${time}分钟` : '-'
     },
@@ -307,7 +307,7 @@ const SolutionPage: React.FC = () => {
     },
     {
       title: '点赞数',
-      dataIndex: 'likeCount',
+      dataIndex: 'favoriteCount',
       width: 80,
       sorter: true
     },

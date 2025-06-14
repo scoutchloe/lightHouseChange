@@ -23,6 +23,9 @@ export const authApi = {
   
   // 获取用户信息
   getUserInfo: () => http.get<any>('/auth/userinfo'),
+  
+  // 获取当前用户权限
+  getUserPermissions: () => http.get<Permission[]>('/auth/permissions'),
 };
 
 // 空间类型API
@@ -216,47 +219,62 @@ export const userApi = {
     http.put(`/users/${id}/password`, { newPassword }),
 };
 
-// 角色管理API（预留，后端暂未实现）
+// 角色管理API
 export const roleApi = {
-  // 获取角色列表
-  getList: () => http.get<Role[]>('/roles'),
+  // 分页查询角色
+  getPage: (params: {
+    current?: number;
+    size?: number;
+    roleName?: string;
+    roleCode?: string;
+    status?: number;
+  }) => http.get<PageResponse<Role>>('/system/role/page', { params }),
   
-  // 获取角色详情
-  getDetail: (id: number) => http.get<Role>(`/roles/${id}`),
+  // 获取所有角色列表
+  getList: () => http.get<Role[]>('/system/role/list'),
+  
+  // 获取角色详情（包含权限信息）
+  getDetail: (id: number) => http.get<Role>(`/system/role/${id}`),
   
   // 创建角色
-  create: (data: Partial<Role>) => http.post<Role>('/roles', data),
+  create: (data: Partial<Role>) => http.post<any>('/system/role', data),
   
   // 更新角色
-  update: (id: number, data: Partial<Role>) => http.put<Role>(`/roles/${id}`, data),
+  update: (data: Partial<Role>) => http.put<any>('/system/role', data),
   
   // 删除角色
-  delete: (id: number) => http.delete(`/roles/${id}`),
+  delete: (id: number) => http.delete<any>(`/system/role/${id}`),
   
-  // 分配权限
-  assignPermissions: (id: number, permissionIds: number[]) =>
-    http.put(`/roles/${id}/permissions`, { permissionIds }),
+  // 分配角色权限
+  assignPermissions: (data: { roleId: number; permissionIds: number[] }) =>
+    http.post<any>('/system/role/assign-permissions', data),
 };
 
-// 权限管理API（预留，后端暂未实现）
+// 权限管理API
 export const permissionApi = {
-  // 获取权限列表
-  getList: () => http.get<Permission[]>('/permissions'),
-  
   // 获取权限树
-  getTree: () => http.get<Permission[]>('/permissions/tree'),
+  getTree: () => http.get<Permission[]>('/system/permission/tree'),
+  
+  // 分页查询权限
+  getPage: (params: {
+    current?: number;
+    size?: number;
+    permissionName?: string;
+    permissionType?: number;
+    status?: number;
+  }) => http.get<PageResponse<Permission>>('/system/permission/page', { params }),
   
   // 获取权限详情
-  getDetail: (id: number) => http.get<Permission>(`/permissions/${id}`),
+  getDetail: (id: number) => http.get<Permission>(`/system/permission/${id}`),
   
   // 创建权限
-  create: (data: Partial<Permission>) => http.post<Permission>('/permissions', data),
+  create: (data: Partial<Permission>) => http.post<any>('/system/permission', data),
   
   // 更新权限
-  update: (id: number, data: Partial<Permission>) => http.put<Permission>(`/permissions/${id}`, data),
+  update: (data: Partial<Permission>) => http.put<any>('/system/permission', data),
   
   // 删除权限
-  delete: (id: number) => http.delete(`/permissions/${id}`),
+  delete: (id: number) => http.delete<any>(`/system/permission/${id}`),
 };
 
 // 健康检查API
@@ -336,6 +354,13 @@ export const adminUserApi = {
   
   // 检查手机号是否可用
   checkPhone: (phone: string) => http.get<boolean>(`/admin-user/check-phone`, { params: { phone } }),
+  
+  // 获取用户角色
+  getUserRoles: (id: number) => http.get<any[]>(`/admin-user/${id}/roles`),
+  
+  // 分配用户角色
+  assignRoles: (id: number, roleIds: number[]) => 
+    http.put(`/admin-user/${id}/roles`, { roleIds }),
 };
 
 // 系统配置API

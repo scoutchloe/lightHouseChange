@@ -1,0 +1,106 @@
+.system-user-page {
+  padding: 24px;
+}
+
+.system-user-page .search-form {
+  margin-bottom: 0;
+}
+
+.system-user-page .search-form .ant-form-item {
+  margin-bottom: 16px;
+}
+
+.system-user-page .table-card {
+  margin-top: 16px;
+}
+
+.system-user-page .table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.system-user-page .table-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.system-user-page .ant-table-scroll {
+  overflow-x: auto;
+}
+
+.system-user-page .ant-avatar {
+  border: 1px solid #f0f0f0;
+}
+
+.system-user-page .ant-modal-body {
+  padding: 24px;
+}
+
+.system-user-page .ant-form-vertical .ant-form-item-label {
+  padding: 0 0 4px;
+}
+
+.system-user-page .ant-form-vertical .ant-form-item-label > label {
+  font-weight: 500;
+}
+
+.system-user-page .ant-btn-link {
+  padding: 0;
+  height: auto;
+  border: none;
+  background: transparent;
+}
+
+.system-user-page .ant-btn-link:hover {
+  background: transparent;
+}
+
+.system-user-page .ant-tag {
+  margin: 0;
+}
+
+.system-user-page .ant-transfer {
+  display: flex;
+  align-items: center;
+}
+
+.system-user-page .ant-transfer-list {
+  flex: 1;
+}
+
+.system-user-page .ant-transfer-operation {
+  margin: 0 16px;
+}
+
+@media (max-width: 768px) {
+  .system-user-page {
+    padding: 16px;
+  }
+  
+  .system-user-page .search-form {
+    display: block;
+  }
+  
+  .system-user-page .search-form .ant-form-item {
+    display: block;
+    margin-right: 0;
+    margin-bottom: 16px;
+  }
+  
+  .system-user-page .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .system-user-page .ant-transfer {
+    flex-direction: column;
+  }
+  
+  .system-user-page .ant-transfer-operation {
+    margin: 16px 0;
+  }
+} 

@@ -89,7 +89,7 @@ cors:
 
 # JWT配置
 jwt:
-  secret: mySecretKey123456789012345678901234567890
+  secret: mySecretKey1234567890123456789012345678900
   expiration: 86400000  # 24小时，单位毫秒
 
 # 定时任务配置

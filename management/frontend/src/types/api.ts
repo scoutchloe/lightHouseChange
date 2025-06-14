@@ -187,27 +187,52 @@ export interface User {
 // 角色类型
 export interface Role {
   id: number;
-  name: string;
-  code: string;
-  description: string;
-  status: boolean;
-  permissions: string[]; // 权限代码数组
+  roleCode: string;
+  roleName: string;
+  status: number; // 0-禁用，1-启用
+  description?: string;
   createdAt: string;
   updatedAt: string;
+  createBy?: number;
+  updateBy?: number;
+  permissions?: Permission[]; // 关联的权限列表
 }
 
 // 权限类型
 export interface Permission {
   id: number;
-  name: string;
-  code: string;
-  type: 'menu' | 'button'; // 菜单权限或按钮权限
+  permissionCode: string;
+  permissionName: string;
+  permissionType: string; // 'menu' | 'button'
   parentId: number;
-  path: string;
-  component: string;
-  icon: string;
+  menuPath?: string;
+  componentPath?: string;
+  icon?: string;
   sortOrder: number;
-  status: boolean;
+  status: number; // 0-禁用，1-启用
+  description?: string;
   createdAt: string;
   updatedAt: string;
+  createBy?: number;
+  updateBy?: number;
+  children?: Permission[]; // 子权限
+}
+
+// 管理员用户类型
+export interface Admin {
+  id: number;
+  username: string;
+  password?: string;
+  realName?: string;
+  email?: string;
+  phone?: string;
+  avatar?: string;
+  status: number; // 0-禁用，1-启用
+  role: number; // 1-超级管理员，2-普通管理员
+  lastLoginTime?: string;
+  lastLoginIp?: string;
+  createdAt: string;
+  updatedAt: string;
+  isDeleted?: number; // 0-未删除，1-已删除
+  roles?: Role[]; // 关联的角色列表（用于扩展权限）
 } 

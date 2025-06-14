@@ -7,9 +7,15 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nextera.managelighthouse.dto.AdminUserDto;
 import com.nextera.managelighthouse.dto.LoginRequest;
 import com.nextera.managelighthouse.dto.LoginResponse;
+import com.nextera.managelighthouse.dto.SysPermissionDTO;
 import com.nextera.managelighthouse.entity.Admin;
+import com.nextera.managelighthouse.entity.SysPermission;
+import com.nextera.managelighthouse.entity.SysRole;
 import com.nextera.managelighthouse.mapper.AdminMapper;
 import com.nextera.managelighthouse.service.AdminService;
+import com.nextera.managelighthouse.service.AdminRoleService;
+import com.nextera.managelighthouse.service.SysPermissionService;
+import com.nextera.managelighthouse.service.SysRoleService;
 import com.nextera.managelighthouse.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +25,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 管理员Service实现类
@@ -30,6 +40,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private final AdminRoleService adminRoleService;
+    private final SysRoleService roleService;
+    private final SysPermissionService permissionService;
     
     @Override
     public LoginResponse login(LoginRequest loginRequest, String clientIp) {
@@ -260,5 +273,104 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         LambdaQueryWrapper<Admin> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Admin::getPhone, phone);
         return count(queryWrapper) > 0;
+    }
+
+    @Override
+    public List<SysPermissionDTO> getAdminPermissions(Long adminId) {
+        log.info("开始获取管理员权限，管理员ID: {}", adminId);
+        
+        // 获取管理员信息
+        Admin admin = getById(adminId);
+        if (admin == null) {
+            log.warn("管理员 {} 不存在", adminId);
+            return new ArrayList<>();
+        }
+        
+        // 如果是admin用户，返回所有权限
+        if ("admin".equals(admin.getUsername())) {
+            log.info("检测到超级管理员admin，返回所有权限");
+            List<SysPermission> allPermissions = permissionService.list();
+            log.info("系统中所有权限数量: {}", allPermissions.size());
+            
+            // 转换为DTO并构建树形结构
+            List<SysPermissionDTO> permissionDTOs = allPermissions.stream()
+                    .map(this::convertToPermissionDTO)
+                    .collect(Collectors.toList());
+            
+            // 构建权限树
+            List<SysPermissionDTO> permissionTree = buildPermissionTree(permissionDTOs, 0L);
+            log.info("超级管理员权限树构建完成，根节点数量: {}", permissionTree.size());
+            
+            return permissionTree;
+        }
+        
+        // 普通管理员，按角色获取权限
+        List<SysRole> roles = roleService.getRolesByAdminId(adminId);
+        log.info("管理员 {} 的角色数量: {}", adminId, roles.size());
+        
+        if (roles.isEmpty()) {
+            log.warn("管理员 {} 没有分配任何角色", adminId);
+            return new ArrayList<>();
+        }
+        
+        // 收集所有角色的权限
+        List<SysPermission> allPermissions = new ArrayList<>();
+        for (SysRole role : roles) {
+            log.info("获取角色 {} [{}] 的权限", role.getRoleName(), role.getId());
+            List<SysPermission> rolePermissions = permissionService.getPermissionsByRoleId(role.getId());
+            log.info("角色 {} 的权限数量: {}", role.getRoleName(), rolePermissions.size());
+            allPermissions.addAll(rolePermissions);
+        }
+        
+        // 去重（使用权限ID去重）
+        Map<Long, SysPermission> uniquePermissions = allPermissions.stream()
+                .collect(Collectors.toMap(
+                    SysPermission::getId,
+                    permission -> permission,
+                    (existing, replacement) -> existing
+                ));
+        
+        log.info("去重后的权限数量: {}", uniquePermissions.size());
+        
+        // 转换为DTO并构建树形结构
+        List<SysPermissionDTO> permissionDTOs = uniquePermissions.values().stream()
+                .map(this::convertToPermissionDTO)
+                .collect(Collectors.toList());
+        
+        // 构建权限树
+        List<SysPermissionDTO> permissionTree = buildPermissionTree(permissionDTOs, 0L);
+        log.info("构建权限树完成，根节点数量: {}", permissionTree.size());
+        
+        return permissionTree;
+    }
+    
+    /**
+     * 转换权限实体为DTO
+     */
+    private SysPermissionDTO convertToPermissionDTO(SysPermission permission) {
+        SysPermissionDTO dto = new SysPermissionDTO();
+        BeanUtils.copyProperties(permission, dto);
+        return dto;
+    }
+    
+    /**
+     * 构建权限树
+     */
+    private List<SysPermissionDTO> buildPermissionTree(List<SysPermissionDTO> permissions, Long parentId) {
+        return permissions.stream()
+                .filter(permission -> {
+                    Long permissionParentId = permission.getParentId();
+                    return (parentId == null && permissionParentId == null) ||
+                           (parentId != null && parentId.equals(permissionParentId)) ||
+                           (parentId == 0L && (permissionParentId == null || permissionParentId == 0L));
+                })
+                .map(permission -> {
+                    List<SysPermissionDTO> children = buildPermissionTree(permissions, permission.getId());
+                    if (!children.isEmpty()) {
+                        permission.setChildren(children);
+                    }
+                    return permission;
+                })
+                .collect(Collectors.toList());
     }
 } 

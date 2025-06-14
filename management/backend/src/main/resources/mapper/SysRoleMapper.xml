@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nextera.managelighthouse.mapper.SysRoleMapper">
+
+    <!-- 基本结果映射 -->
+    <resultMap id="BaseResultMap" type="com.nextera.managelighthouse.entity.SysRole">
+        <id column="id" property="id" />
+        <result column="role_code" property="roleCode" />
+        <result column="role_name" property="roleName" />
+        <result column="status" property="status" />
+        <result column="description" property="description" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+    </resultMap>
+
+    <!-- 根据管理员ID查询角色列表 -->
+    <select id="selectRolesByAdminId" resultMap="BaseResultMap">
+        SELECT r.*
+        FROM sys_role r
+        INNER JOIN admin_role ar ON r.id = ar.role_id
+        WHERE ar.admin_id = #{adminId}
+          AND r.status = 1
+    </select>
+
+    <!-- 根据管理员ID查询角色编码列表 -->
+    <select id="selectRoleCodesByAdminId" resultType="java.lang.String">
+        SELECT r.role_code
+        FROM sys_role r
+        INNER JOIN admin_role ar ON r.id = ar.role_id
+        WHERE ar.admin_id = #{adminId}
+          AND r.status = 1
+    </select>
+
+</mapper> 

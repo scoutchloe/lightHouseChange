@@ -40,6 +40,9 @@ public class Problem {
      */
     @TableField("space_id")
     private Long spaceId;
+
+    @TableField(exist = false)
+    private String spaceName;
     
     /**
      * 状态：0-禁用，1-启用

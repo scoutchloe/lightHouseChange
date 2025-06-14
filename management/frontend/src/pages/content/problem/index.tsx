@@ -240,7 +240,7 @@ const ProblemPage: React.FC = () => {
     },
     {
       title: '问题标题',
-      dataIndex: 'title',
+      dataIndex: 'name',
       width: 200,
       ellipsis: {
         showTitle: false
@@ -286,7 +286,7 @@ const ProblemPage: React.FC = () => {
     },
     {
       title: '排序',
-      dataIndex: 'sortOrder',
+      dataIndex: 'sort',
       width: 80,
       sorter: true
     },

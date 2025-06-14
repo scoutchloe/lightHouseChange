@@ -27,7 +27,7 @@ import {
 } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
-import { adminUserApi } from '../../../services/api';
+import { adminUserApi, roleApi } from '../../../services/api';
 import './style.css';
 
 const { Option } = Select;
@@ -47,6 +47,13 @@ interface AdminUser {
   updateTime: string;
 }
 
+interface Role {
+  id: number;
+  roleName: string;
+  roleCode: string;
+  status: number;
+}
+
 const AdminUserPage: React.FC = () => {
   const [form] = Form.useForm();
   const [modalForm] = Form.useForm();
@@ -60,6 +67,7 @@ const AdminUserPage: React.FC = () => {
   const [passwordModalVisible, setPasswordModalVisible] = useState(false);
   const [editingRecord, setEditingRecord] = useState<AdminUser | null>(null);
   const [resetPasswordRecord, setResetPasswordRecord] = useState<AdminUser | null>(null);
+  const [roleList, setRoleList] = useState<Role[]>([]);
 
   // 状态选项
   const statusOptions = [
@@ -67,11 +75,23 @@ const AdminUserPage: React.FC = () => {
     { label: '禁用', value: 0 },
   ];
 
-  // 角色选项
-  const roleOptions = [
-    { label: '超级管理员', value: 1 },
-    { label: '普通管理员', value: 2 },
-  ];
+  // 获取角色列表
+  const fetchRoleList = async () => {
+    try {
+      const response = await roleApi.getList();
+      console.log('角色列表响应:', response);
+      
+      if (response.code === 200) {
+        setRoleList(response.data || []);
+      } else {
+        console.error('获取角色列表失败:', response.message);
+        message.error(response.message || '获取角色列表失败');
+      }
+    } catch (error) {
+      console.error('获取角色列表失败:', error);
+      message.error('获取角色列表失败');
+    }
+  };
 
   // 获取管理员用户列表
   const fetchAdminUsers = async (params: any = {}) => {
@@ -275,12 +295,12 @@ const AdminUserPage: React.FC = () => {
       dataIndex: 'role',
       width: 100,
       render: (role: number) => {
-        const roleMap: Record<number, { text: string; color: string }> = {
-          1: { text: '超级管理员', color: 'red' },
-          2: { text: '普通管理员', color: 'blue' }
-        };
-        const roleInfo = roleMap[role];
-        return roleInfo ? <Tag color={roleInfo.color}>{roleInfo.text}</Tag> : role;
+        const roleInfo = roleList.find(r => r.id === role);
+        return roleInfo ? (
+          <Tag color={roleInfo.status === 1 ? 'blue' : 'default'}>
+            {roleInfo.roleName}
+          </Tag>
+        ) : role;
       }
     },
     {
@@ -357,6 +377,7 @@ const AdminUserPage: React.FC = () => {
   ];
 
   useEffect(() => {
+    fetchRoleList();
     fetchAdminUsers();
   }, [current, pageSize]);
 
@@ -389,9 +410,9 @@ const AdminUserPage: React.FC = () => {
           
           <Form.Item name="role" label="角色">
             <Select placeholder="请选择角色" allowClear style={{ width: 120 }}>
-              {roleOptions.map(item => (
-                <Option key={item.value} value={item.value}>
-                  {item.label}
+              {roleList.map(item => (
+                <Option key={item.id} value={item.id}>
+                  {item.roleName}
                 </Option>
               ))}
             </Select>
@@ -515,9 +536,9 @@ const AdminUserPage: React.FC = () => {
                 rules={[{ required: true, message: '请选择角色' }]}
               >
                 <Select placeholder="请选择角色">
-                  {roleOptions.map(item => (
-                    <Option key={item.value} value={item.value}>
-                      {item.label}
+                  {roleList.map(item => (
+                    <Option key={item.id} value={item.id}>
+                      {item.roleName}
                     </Option>
                   ))}
                 </Select>

@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Form, Input, Button, Card, Typography, message } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Card, Typography, message, Checkbox } from 'antd';
+import { UserOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { authApi } from '../../services/api';
 import { STORAGE_KEYS, ROUTES } from '../../constants';
+import { usePermission } from '../../hooks/usePermission';
 import './style.css';
 
 const { Title, Text } = Typography;
@@ -11,6 +12,7 @@ const { Title, Text } = Typography;
 interface LoginForm {
   username: string;
   password: string;
+  remember?: boolean;
 }
 
 // 粒子动画组件
@@ -124,6 +126,7 @@ const LoginPage: React.FC = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { refreshPermissions } = usePermission();
 
   // 检查是否已登录
   useEffect(() => {
@@ -136,15 +139,22 @@ const LoginPage: React.FC = () => {
   const handleLogin = async (values: LoginForm) => {
     setLoading(true);
     try {
+      console.log('开始登录，用户名:', values.username);
       const response = await authApi.login(values);
+      console.log('登录响应:', response);
       
       // 保存token和用户信息
       localStorage.setItem(STORAGE_KEYS.TOKEN, response.data.token);
       localStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(response.data.adminInfo));
       
+      console.log('登录成功，开始获取用户权限...');
+      // 登录成功后立即获取用户权限
+      await refreshPermissions();
+      
       message.success('登录成功');
       navigate(ROUTES.DASHBOARD);
     } catch (error: any) {
+      console.error('登录失败:', error);
       message.error(error.message || '登录失败');
     } finally {
       setLoading(false);

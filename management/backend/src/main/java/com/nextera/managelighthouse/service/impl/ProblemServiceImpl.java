@@ -1,6 +1,5 @@
 package com.nextera.managelighthouse.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -10,7 +9,6 @@ import com.nextera.managelighthouse.service.ProblemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -24,27 +22,8 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
     
     @Override
     public IPage<Problem> getProblemPage(Page<Problem> page, String name, Long spaceId, Integer status) {
-        LambdaQueryWrapper<Problem> queryWrapper = new LambdaQueryWrapper<>();
-        
-        // 名称模糊查询
-        if (StringUtils.hasText(name)) {
-            queryWrapper.like(Problem::getName, name);
-        }
-        
-        // 空间ID筛选
-        if (spaceId != null) {
-            queryWrapper.eq(Problem::getSpaceId, spaceId);
-        }
-        
-        // 状态筛选
-        if (status != null) {
-            queryWrapper.eq(Problem::getStatus, status);
-        }
-        
-        // 按排序权重和创建时间倒序
-        queryWrapper.orderByDesc(Problem::getSort, Problem::getCreatedAt);
-        
-        return page(page, queryWrapper);
+        // 使用自定义的XML查询方法，可以关联查询space表获取spaceName
+        return baseMapper.selectProblemPage(page, name, spaceId, status);
     }
     
     @Override

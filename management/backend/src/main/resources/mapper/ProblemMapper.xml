@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nextera.managelighthouse.mapper.ProblemMapper">
+
+    <!-- Problem结果映射 -->
+    <resultMap id="BaseResultMap" type="com.nextera.managelighthouse.entity.Problem">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="icon" property="icon" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="space_id" property="spaceId" jdbcType="BIGINT"/>
+        <result column="space_name" property="spaceName" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="created_at" property="createdAt" jdbcType="TIMESTAMP"/>
+        <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 分页查询问题列表（关联空间信息） -->
+    <select id="selectProblemPage" resultMap="BaseResultMap">
+        SELECT 
+            p.id,
+            p.name,
+            p.icon,
+            p.description,
+            p.space_id,
+            s.name as space_name,
+            p.status,
+            p.sort,
+            p.created_at,
+            p.updated_at,
+            p.is_deleted
+        FROM problems p
+        LEFT JOIN spaces s ON p.space_id = s.id AND s.is_deleted = 0
+        WHERE p.is_deleted = 0
+        <if test="name != null and name != ''">
+            AND p.name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="spaceId != null">
+            AND p.space_id = #{spaceId}
+        </if>
+        <if test="status != null">
+            AND p.status = #{status}
+        </if>
+        ORDER BY p.sort DESC, p.created_at DESC
+    </select>
+
+</mapper> 

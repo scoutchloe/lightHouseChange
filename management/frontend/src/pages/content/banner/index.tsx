@@ -291,7 +291,7 @@ const BannerPage: React.FC = () => {
     },
     {
       title: '链接地址',
-      dataIndex: 'linkUrl',
+      dataIndex: 'link',
       width: 200,
       ellipsis: {
         showTitle: false
@@ -321,7 +321,7 @@ const BannerPage: React.FC = () => {
     },
     {
       title: '排序',
-      dataIndex: 'sortOrder',
+      dataIndex: 'sort',
       width: 80,
       sorter: true
     },

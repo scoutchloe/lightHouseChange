@@ -27,6 +27,8 @@ import {
 } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 import { contentSpaceApi } from '../../../services/api';
+import PermissionControl from '../../../components/PermissionControl';
+import { PERMISSIONS } from '../../../constants';
 import './style.css';
 
 const { Option } = Select;
@@ -288,7 +290,7 @@ const SpacePage: React.FC = () => {
     },
     {
       title: '创建时间',
-      dataIndex: 'createTime',
+      dataIndex: 'createdAt',
       width: 160,
       sorter: true,
     },
@@ -299,36 +301,44 @@ const SpacePage: React.FC = () => {
       fixed: 'right',
       render: (_, record) => (
         <Space>
-          <Button
-            type="link"
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => handleEdit(record)}
-          >
-            编辑
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => handleUpdateStatus(record.id, record.status === 1 ? 0 : 1)}
-          >
-            {record.status === 1 ? '禁用' : '启用'}
-          </Button>
-          <Popconfirm
-            title="确定要删除这个空间吗？"
-            onConfirm={() => handleDelete(record.id)}
-            okText="确定"
-            cancelText="取消"
-          >
+          <PermissionControl permission={PERMISSIONS.CONTENT_SPACE_UPDATE}>
             <Button
               type="link"
               size="small"
-              danger
-              icon={<DeleteOutlined />}
+              icon={<EditOutlined />}
+              onClick={() => handleEdit(record)}
             >
-              删除
+              编辑
             </Button>
-          </Popconfirm>
+          </PermissionControl>
+          
+          <PermissionControl permission={PERMISSIONS.CONTENT_SPACE_UPDATE}>
+            <Button
+              type="link"
+              size="small"
+              onClick={() => handleUpdateStatus(record.id, record.status === 1 ? 0 : 1)}
+            >
+              {record.status === 1 ? '禁用' : '启用'}
+            </Button>
+          </PermissionControl>
+          
+          <PermissionControl permission={PERMISSIONS.CONTENT_SPACE_DELETE}>
+            <Popconfirm
+              title="确定要删除这个空间吗？"
+              onConfirm={() => handleDelete(record.id)}
+              okText="确定"
+              cancelText="取消"
+            >
+              <Button
+                type="link"
+                size="small"
+                danger
+                icon={<DeleteOutlined />}
+              >
+                删除
+              </Button>
+            </Popconfirm>
+          </PermissionControl>
         </Space>
       ),
     },
@@ -375,23 +385,28 @@ const SpacePage: React.FC = () => {
         <div className="table-header">
           <h3>空间列表</h3>
           <Space>
-            <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
-              新增空间
-            </Button>
-            <Popconfirm
-              title="确定要删除选中的空间吗？"
-              onConfirm={handleBatchDelete}
-              okText="确定"
-              cancelText="取消"
-            >
-              <Button 
-                danger 
-                icon={<DeleteOutlined />}
-                disabled={selectedRowKeys.length === 0}
-              >
-                批量删除
+            <PermissionControl permission={PERMISSIONS.CONTENT_SPACE_CREATE}>
+              <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
+                新增空间
               </Button>
-            </Popconfirm>
+            </PermissionControl>
+            
+            <PermissionControl permission={PERMISSIONS.CONTENT_SPACE_DELETE}>
+              <Popconfirm
+                title="确定要删除选中的空间吗？"
+                onConfirm={handleBatchDelete}
+                okText="确定"
+                cancelText="取消"
+              >
+                <Button 
+                  danger 
+                  icon={<DeleteOutlined />}
+                  disabled={selectedRowKeys.length === 0}
+                >
+                  批量删除
+                </Button>
+              </Popconfirm>
+            </PermissionControl>
           </Space>
         </div>
         

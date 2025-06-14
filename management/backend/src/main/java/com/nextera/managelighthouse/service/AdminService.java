@@ -6,7 +6,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.nextera.managelighthouse.dto.AdminUserDto;
 import com.nextera.managelighthouse.dto.LoginRequest;
 import com.nextera.managelighthouse.dto.LoginResponse;
+import com.nextera.managelighthouse.dto.SysPermissionDTO;
 import com.nextera.managelighthouse.entity.Admin;
+
+import java.util.List;
 
 /**
  * 管理员Service接口
@@ -67,4 +70,9 @@ public interface AdminService extends IService<Admin> {
      * 检查手机号是否存在
      */
     boolean existsByPhone(String phone);
+    
+    /**
+     * 获取管理员权限列表
+     */
+    List<SysPermissionDTO> getAdminPermissions(Long adminId);
 } 

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nextera.managelighthouse.mapper.SysPermissionMapper">
+
+    <!-- 基本结果映射 -->
+    <resultMap id="BaseResultMap" type="com.nextera.managelighthouse.entity.SysPermission">
+        <id column="id" property="id" />
+        <result column="permission_code" property="permissionCode" />
+        <result column="permission_name" property="permissionName" />
+        <result column="permission_type" property="permissionType" />
+        <result column="parent_id" property="parentId" />
+        <result column="menu_path" property="menuPath" />
+        <result column="component_path" property="componentPath" />
+        <result column="icon" property="icon" />
+        <result column="sort_order" property="sortOrder" />
+        <result column="status" property="status" />
+        <result column="description" property="description" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+    </resultMap>
+
+    <!-- 根据管理员ID查询权限列表 -->
+    <select id="selectPermissionsByAdminId" resultMap="BaseResultMap">
+        SELECT DISTINCT p.*
+        FROM sys_permission p
+        LEFT JOIN sys_role_permission rp ON p.id = rp.permission_id
+        LEFT JOIN sys_role r ON rp.role_id = r.id
+        LEFT JOIN admin_role ar ON r.id = ar.role_id
+        WHERE ar.admin_id = #{adminId}
+          AND p.status = 1
+          AND r.status = 1
+        ORDER BY p.sort_order ASC
+    </select>
+    
+    <!-- 根据用户ID查询权限列表（兼容旧接口） -->
+    <select id="selectPermissionsByUserId" resultMap="BaseResultMap">
+        SELECT DISTINCT p.*
+        FROM sys_permission p
+        LEFT JOIN sys_role_permission rp ON p.id = rp.permission_id
+        LEFT JOIN sys_role r ON rp.role_id = r.id
+        LEFT JOIN admin_role ar ON r.id = ar.role_id
+        WHERE ar.admin_id = #{userId}
+          AND p.status = 1
+          AND r.status = 1
+        ORDER BY p.sort_order ASC
+    </select>
+
+    <!-- 根据角色ID查询权限列表 -->
+    <select id="selectPermissionsByRoleId" resultMap="BaseResultMap">
+        SELECT p.*
+        FROM sys_permission p
+        INNER JOIN sys_role_permission rp ON p.id = rp.permission_id
+        WHERE rp.role_id = #{roleId}
+          AND p.status = 1
+        ORDER BY p.sort_order ASC
+    </select>
+
+    <!-- 根据用户ID查询权限编码列表 -->
+    <select id="selectPermissionCodesByUserId" resultType="java.lang.String">
+        SELECT DISTINCT p.permission_code
+        FROM sys_permission p
+        LEFT JOIN sys_role_permission rp ON p.id = rp.permission_id
+        LEFT JOIN sys_role r ON rp.role_id = r.id
+        LEFT JOIN sys_user_role ur ON r.id = ur.role_id
+        WHERE ur.user_id = #{userId}
+          AND p.status = 1
+          AND r.status = 1
+    </select>
+
+    <!-- 根据父级ID查询子权限列表 -->
+    <select id="selectByParentId" resultMap="BaseResultMap">
+        SELECT *
+        FROM sys_permission
+        WHERE parent_id = #{parentId}
+          AND status = 1
+        ORDER BY sort_order ASC
+    </select>
+
+</mapper> 
